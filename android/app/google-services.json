@@ -1,0 +1,118 @@
+{
+  "project_info": {
+    "project_number": "817195242541",
+    "project_id": "pilar-presence-app",
+    "storage_bucket": "pilar-presence-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:817195242541:android:3051fd75e87b487cca14a4",
+        "android_client_info": {
+          "package_name": "com.example.pilar_presence_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "817195242541-ns2srneedqnrn73gln7hn6h4tbbtomhl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-ZihWJvSeTS75WfjJclT9YbV4DabL9OA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "817195242541-ns2srneedqnrn73gln7hn6h4tbbtomhl.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "817195242541-61ajjl44s38qssvti6nvd7hpab669d3a.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.piallarkreatifteknologi.pilarPresenceApp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:817195242541:android:ae9a06d42d90fd14ca14a4",
+        "android_client_info": {
+          "package_name": "com.piallarkreatifteknologi.pilar_presence_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "817195242541-ns2srneedqnrn73gln7hn6h4tbbtomhl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-ZihWJvSeTS75WfjJclT9YbV4DabL9OA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "817195242541-ns2srneedqnrn73gln7hn6h4tbbtomhl.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "817195242541-61ajjl44s38qssvti6nvd7hpab669d3a.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.piallarkreatifteknologi.pilarPresenceApp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:817195242541:android:13beacb36f224d8aca14a4",
+        "android_client_info": {
+          "package_name": "com.pilarkreatifteknologi.pilar_presence_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "817195242541-ns2srneedqnrn73gln7hn6h4tbbtomhl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-ZihWJvSeTS75WfjJclT9YbV4DabL9OA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "817195242541-ns2srneedqnrn73gln7hn6h4tbbtomhl.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "817195242541-61ajjl44s38qssvti6nvd7hpab669d3a.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.piallarkreatifteknologi.pilarPresenceApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
