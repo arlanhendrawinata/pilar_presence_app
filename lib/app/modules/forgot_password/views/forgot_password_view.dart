@@ -15,13 +15,11 @@ class ForgotPasswordView extends GetView<ForgotPasswordController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: ScreenUtilInit(
-          builder: (context, child) => Text(
-            'Reset Password',
-            style: TextStyle(
-              color: AppColor.secondary,
-              fontSize: Constant.textSize(context: context, fontSize: 14),
-            ),
+        title: Text(
+          'Reset Password',
+          style: TextStyle(
+            color: AppColor.secondary,
+            fontSize: Constant.textSize(context: context, fontSize: 14),
           ),
         ),
         leading: ScreenUtilInit(
@@ -38,108 +36,104 @@ class ForgotPasswordView extends GetView<ForgotPasswordController> {
         elevation: 0,
         centerTitle: true,
         bottom: PreferredSize(
-          preferredSize: Size.fromHeight(1),
+          preferredSize: const Size.fromHeight(1),
           child: Container(
-            width: MediaQuery.of(context).size.width,
+            width: Get.width,
             height: 1,
             color: AppColor.secondaryExtraSoft,
           ),
         ),
       ),
-      body: ScreenUtilInit(
-        builder: (context, child) {
-          return CustomScrollView(
-            slivers: [
-              SliverFillRemaining(
-                hasScrollBody: false,
-                child: Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Column(
+      body: CustomScrollView(
+        slivers: [
+          SliverFillRemaining(
+            hasScrollBody: false,
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                children: [
+                  //image
+                  Container(
+                    height: 220,
+                    alignment: Alignment.center,
+                    child: const Image(
+                      image: AssetImage('assets/forgot_password.png'),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      //image
-                      Container(
-                        height: 220.h,
-                        alignment: Alignment.center,
-                        child: Image(
-                          image: AssetImage('assets/forgot_password.png'),
-                          fit: BoxFit.cover,
+                      Text(
+                        "Reset Password",
+                        style: TextStyle(
+                          fontSize:
+                              Constant.textSize(context: context, fontSize: 16),
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
-                      SizedBox(height: 20.h),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Reset Password",
-                            style: TextStyle(
-                              fontSize: Constant.textSize(
-                                  context: context, fontSize: 16),
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                          SizedBox(height: 10.h),
-                          Text(
-                            "Masukkan email yang terkait dengan akun anda dan kami akan mengirimkan email dengan instruksi untuk mengatur ulang kata sandi anda",
-                            style: TextStyle(
-                              color: BlackSoftColor,
-                              fontSize: Constant.textSize(
-                                  context: context, fontSize: 14),
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 30.h),
-                      CustomInput(
-                        context: context,
-                        controller: controller.emailC,
-                        label: "Email",
-                        hint: "youremail@gmail.com",
-                        obsecureText: false,
-                      ),
-                      SizedBox(height: 20.h),
-                      Container(
-                        height: 50.h,
-                        width: MediaQuery.of(context).size.width,
-                        child: Obx(
-                          () => ElevatedButton(
-                            onPressed: () {
-                              if (controller.isLoading.isFalse) {
-                                controller.resetPassword();
-                              }
-                            },
-                            child: (controller.isLoading.isFalse)
-                                ? Text(
-                                    'Reset Password',
-                                    style: TextStyle(
-                                      fontSize: Constant.textSize(
-                                          context: context, fontSize: 14),
-                                    ),
-                                  )
-                                : Container(
-                                    height: 20.h,
-                                    width: 20.w,
-                                    child: CircularProgressIndicator(
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: primaryColor,
-                              // padding: EdgeInsets.symmetric(vertical: 18),
-                              elevation: 0,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8.r),
-                              ),
-                            ),
-                          ),
+                      const SizedBox(height: 10),
+                      Text(
+                        "Masukkan email yang terkait dengan akun anda dan kami akan mengirimkan email dengan instruksi untuk mengatur ulang kata sandi anda",
+                        style: TextStyle(
+                          color: BlackSoftColor,
+                          fontSize:
+                              Constant.textSize(context: context, fontSize: 14),
                         ),
-                      )
+                      ),
                     ],
                   ),
-                ),
-              )
-            ],
-          );
-        },
+                  const SizedBox(height: 30),
+                  CustomInput(
+                    context: context,
+                    controller: controller.emailC,
+                    label: "Email",
+                    hint: "youremail@gmail.com",
+                    obsecureText: false,
+                  ),
+                  const SizedBox(height: 20),
+                  SizedBox(
+                    height: 50,
+                    width: Get.width,
+                    child: Obx(
+                      () => ElevatedButton(
+                        onPressed: () {
+                          if (controller.isLoading.isFalse) {
+                            controller.resetPassword();
+                          }
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: primaryColor,
+                          // padding: EdgeInsets.symmetric(vertical: 18),
+                          elevation: 0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                        child: (controller.isLoading.isFalse)
+                            ? Text(
+                                'Reset Password',
+                                style: TextStyle(
+                                  fontSize: Constant.textSize(
+                                      context: context, fontSize: 14),
+                                ),
+                              )
+                            : const SizedBox(
+                                height: 20,
+                                width: 20,
+                                child: CircularProgressIndicator(
+                                  color: Colors.white,
+                                ),
+                              ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          )
+        ],
       ),
     );
   }

@@ -23,12 +23,53 @@ class PerizinanCutiRequestController extends GetxController {
 
   RxString defDateEnd = ''.obs;
 
+  Future<DocumentSnapshot<Map<String, dynamic>>> cutiTahunan() async {
+    int year = DateTime.now().year;
+    return await firestore.collection("cuti").doc("$year").get();
+  }
+
+  Future<int> getCuti() async {
+    String uid = await auth.currentUser!.uid;
+    int dateminus = 0;
+
+    // get all presence
+    await firestore
+        .collection("perizinan")
+        .doc(uid)
+        .collection("cuti")
+        .get()
+        .then((value) => value.docs.forEach((element) {
+              if (element.data()['status'] != 'rejected') {
+                int dtStart = int.parse(DateFormat.d()
+                    .format(DateTime.parse(element.data()['cuti_start'])));
+                int dtEnd = int.parse(DateFormat.d()
+                    .format(DateTime.parse(element.data()['cuti_end'])));
+                dateminus += (dtEnd - dtStart) + 1;
+              }
+            }));
+    return dateminus;
+  }
+
+  Future<int> sisaCuti() async {
+    int totalCuti =
+        await cutiTahunan().then((value) => value.data()!['amount']);
+    int dateminus = await getCuti();
+    return totalCuti - dateminus;
+  }
+
   requestCuti() async {
-    // print("Start : $dateStart");
-    // print("End : $dateEnd");
     if (dateStart != null && dateEnd != null && ketCutiC.text != "") {
       if (dateStart!.compareTo(dateEnd!) < 0) {
-        await addCuti();
+        int countDateRequest = (dateEnd!.day - dateStart!.day) + 1;
+        int _sisaCuti = await sisaCuti().then((value) => value);
+        if (_sisaCuti - countDateRequest >= 0) {
+          await addCuti();
+        } else {
+          CustomToast.dangerToast(
+              "Pengajuan Cuti",
+              "Tanggal tidak boleh melebihi sisa cuti. Silahkan memperhatikan sisa cuti anda.",
+              Get.context!);
+        }
       } else {
         CustomToast.dangerToast(
             "Pengajuan Cuti",

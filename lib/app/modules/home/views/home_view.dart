@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:pilar_presence_app/app/routes/app_pages.dart';
 import 'package:pilar_presence_app/app/style/app_color.dart';
@@ -33,132 +32,124 @@ class HomeView extends GetView<HomeController> {
 
             return Scaffold(
               backgroundColor: Colors.white,
-              body: ScreenUtilInit(
-                minTextAdapt: true,
-                builder: (context, child) => SingleChildScrollView(
-                  padding: const EdgeInsets.only(
-                      top: 50, left: 20, right: 20, bottom: 50),
-                  child: StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
-                      //* TODAY PRESENCE STREAM
-                      stream: controller.presenceC.streamPresence(),
-                      builder: (context, snapshotPresence) {
-                        if (snapshotPresence.hasData) {
-                          return Column(
-                            children: [
-                              SizedBox(
-                                height: context.mediaQueryPadding.top,
-                              ),
-                              //* USER PROFILE
-                              userProfile(photoURL, profileName, context),
-                              const SizedBox(height: 30),
+              body: SingleChildScrollView(
+                padding: const EdgeInsets.all(20),
+                child: StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
+                    //* TODAY PRESENCE STREAM
+                    stream: controller.presenceC.streamPresence(),
+                    builder: (context, snapshotPresence) {
+                      if (snapshotPresence.hasData) {
+                        return Column(
+                          children: [
+                            SizedBox(
+                              height: context.mediaQueryPadding.top,
+                            ),
+                            //* USER PROFILE
+                            userProfile(photoURL, profileName, context),
+                            const SizedBox(height: 30),
 
-                              //stream presence
-                              StreamBuilder<
-                                  DocumentSnapshot<Map<String, dynamic>>>(
-                                stream: controller.presenceC.streamPresence(),
-                                builder: (context, snapshotPresence) {
-                                  if (snapshotPresence.data?.data() != null) {
-                                    Map<String, dynamic> dataPresence =
-                                        snapshotPresence.data!.data()!;
-                                    return Column(
-                                      children: [
-                                        //* CARD PRESENCE INFORMATION
-                                        cardPresence(
-                                            context, user, dataPresence),
-                                        const SizedBox(height: 20),
-                                        menuFeatures(context, user),
-                                        const SizedBox(height: 20),
-                                        //* CARD DISTANCE AND MAPS
-                                        card2(context, dataPresence),
-                                      ],
-                                    );
-                                  } else {
-                                    return Column(
-                                      children: [
-                                        infoPresenceIsNull(context),
-                                        const SizedBox(height: 20),
-                                        Column(
-                                          children: [
-                                            cardPresenceIsNull(context),
-                                            const SizedBox(height: 20),
-                                            menuFeatures(context, user),
-                                            const SizedBox(height: 20),
-                                            card2IsNull(context),
-                                          ],
-                                        ),
-                                      ],
-                                    );
-                                  }
-                                },
-                              ),
-                              const SizedBox(height: 20),
-                              //* PRESENCE HISTORY
-                              StreamBuilder<
-                                  QuerySnapshot<Map<String, dynamic>>>(
-                                stream: controller.presenceC
-                                    .streamLast5daysPresence(),
-                                builder: (context, snapshotLast5days) {
-                                  if (snapshotLast5days.hasData) {
-                                    List<
-                                            QueryDocumentSnapshot<
-                                                Map<String, dynamic>>>
-                                        last5days =
-                                        snapshotLast5days.data!.docs;
-                                    return swiper(context, last5days);
-                                  } else {
-                                    return const SizedBox();
-                                  }
-                                },
-                              ),
-                            ],
-                          );
-                        } else {
-                          return Column(
-                            children: [
-                              userProfile(photoURL, profileName, context),
-                              const SizedBox(height: 30),
-                              infoPresenceIsNull(context),
-                              const SizedBox(height: 20),
-                              Column(
-                                children: [
-                                  cardPresenceIsNull(context),
-                                  const SizedBox(height: 20),
-                                  card2IsNull(context),
-                                ],
-                              ),
-                              const SizedBox(height: 20),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    "Histori Kehadiran",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: Constant.textSize(
-                                          context: context, fontSize: 13),
-                                    ),
+                            //stream presence
+                            StreamBuilder<
+                                DocumentSnapshot<Map<String, dynamic>>>(
+                              stream: controller.presenceC.streamPresence(),
+                              builder: (context, snapshotPresence) {
+                                if (snapshotPresence.data?.data() != null) {
+                                  Map<String, dynamic> dataPresence =
+                                      snapshotPresence.data!.data()!;
+                                  return Column(
+                                    children: [
+                                      //* CARD PRESENCE INFORMATION
+                                      cardPresence(context, user, dataPresence),
+                                      const SizedBox(height: 20),
+                                      menuFeatures(context, user),
+                                      const SizedBox(height: 20),
+                                      //* CARD DISTANCE AND MAPS
+                                      card2(context, dataPresence),
+                                    ],
+                                  );
+                                } else {
+                                  return Column(
+                                    children: [
+                                      infoPresenceIsNull(context),
+                                      const SizedBox(height: 20),
+                                      Column(
+                                        children: [
+                                          cardPresenceIsNull(context),
+                                          const SizedBox(height: 20),
+                                          menuFeatures(context, user),
+                                          const SizedBox(height: 20),
+                                          card2IsNull(context),
+                                        ],
+                                      ),
+                                    ],
+                                  );
+                                }
+                              },
+                            ),
+                            const SizedBox(height: 20),
+                            //* PRESENCE HISTORY
+                            StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                              stream: controller.presenceC
+                                  .streamLast5daysPresence(),
+                              builder: (context, snapshotLast5days) {
+                                if (snapshotLast5days.hasData) {
+                                  List<
+                                          QueryDocumentSnapshot<
+                                              Map<String, dynamic>>> last5days =
+                                      snapshotLast5days.data!.docs;
+                                  return swiper(context, last5days);
+                                } else {
+                                  return const SizedBox();
+                                }
+                              },
+                            ),
+                          ],
+                        );
+                      } else {
+                        return Column(
+                          children: [
+                            userProfile(photoURL, profileName, context),
+                            const SizedBox(height: 30),
+                            infoPresenceIsNull(context),
+                            const SizedBox(height: 20),
+                            Column(
+                              children: [
+                                cardPresenceIsNull(context),
+                                const SizedBox(height: 20),
+                                card2IsNull(context),
+                              ],
+                            ),
+                            const SizedBox(height: 20),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "Histori Kehadiran",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: Constant.textSize(
+                                        context: context, fontSize: 13),
                                   ),
-                                  TextButton(
-                                      onPressed: () =>
-                                          Get.toNamed(Routes.PRESENCE_HISTORY),
-                                      child: Text(
-                                        "semua histori",
-                                        style: TextStyle(
-                                          color: primaryColor,
-                                          fontSize: Constant.textSize(
-                                              context: context, fontSize: 14),
-                                        ),
-                                      )),
-                                ],
-                              ),
-                              const SizedBox(height: 20),
-                              historyPresenceIsNull(context)
-                            ],
-                          );
-                        }
-                      }),
-                ),
+                                ),
+                                TextButton(
+                                    onPressed: () =>
+                                        Get.toNamed(Routes.PRESENCE_HISTORY),
+                                    child: Text(
+                                      "semua histori",
+                                      style: TextStyle(
+                                        color: primaryColor,
+                                        fontSize: Constant.textSize(
+                                            context: context, fontSize: 14),
+                                      ),
+                                    )),
+                              ],
+                            ),
+                            const SizedBox(height: 20),
+                            historyPresenceIsNull(context)
+                          ],
+                        );
+                      }
+                    }),
               ),
             );
           } else {
@@ -1067,7 +1058,7 @@ class HomeView extends GetView<HomeController> {
       children: [
         const SizedBox(height: 20),
         InkWell(
-          // onTap: () => Get.toNamed(Routes.OVERTIME_DETAIL, arguments: data),
+          onTap: () => Get.toNamed(Routes.OVERTIME_DETAIL, arguments: data),
           child: Container(
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
@@ -1285,7 +1276,7 @@ class HomeView extends GetView<HomeController> {
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: InkWell(
-                        // onTap: () => Get.toNamed(Routes.PERIZINAN_SAKIT),
+                        onTap: () => Get.toNamed(Routes.PERIZINAN_SAKIT),
                         child: Icon(
                           Ionicons.thermometer_outline,
                           color: primaryColor,

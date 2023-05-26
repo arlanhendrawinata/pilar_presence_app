@@ -7,21 +7,21 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:pilar_presence_app/app/style/app_color.dart';
-import 'package:pilar_presence_app/app/widgets/custom_alert_dialog.dart';
-import 'package:pilar_presence_app/app/widgets/custom_toast.dart';
+import 'package:pilar_presence_app/app/widgets/custom_textarea.dart';
 import 'package:pilar_presence_app/constant.dart';
 
-import '../controllers/presence_remote_controller.dart';
+import '../controllers/perizinan_sakit_request_controller.dart';
 
-class PresenceRemoteView extends GetView<PresenceRemoteController> {
-  const PresenceRemoteView({Key? key}) : super(key: key);
+class PerizinanSakitRequestView
+    extends GetView<PerizinanSakitRequestController> {
+  const PerizinanSakitRequestView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     String imageUrl = "http://via.placeholder.com/200x150";
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Absen Kehadiran Dinas Luar',
+          'Pengajuan Sakit',
           style: TextStyle(
             color: AppColor.secondary,
             fontSize: Constant.textSize(context: context, fontSize: 14),
@@ -43,42 +43,26 @@ class PresenceRemoteView extends GetView<PresenceRemoteController> {
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(1),
           child: Container(
-            width: Get.width,
+            width: MediaQuery.of(context).size.width,
             height: 1,
             color: AppColor.secondaryExtraSoft,
           ),
         ),
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+        padding: const EdgeInsets.all(20),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // title
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Absen kehadiran",
-                  style: TextStyle(
-                    fontSize: Constant.textSize(context: context, fontSize: 16),
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                const SizedBox(height: 16),
-                Text(
-                  "Silahkan melakukan foto diri untuk melakukan absen kehadiran",
-                  style: TextStyle(
-                    color: BlackSoftColor,
-                    fontSize: Constant.textSize(context: context, fontSize: 14),
-                  ),
-                ),
-              ],
+            CustomTextArea(
+              controller: controller.ketSakitC,
+              label: "Keterangan Sakit",
+              hint: "keterangan",
+              context: context,
             ),
-            const SizedBox(height: 30),
+            const SizedBox(height: 20),
+            // IMAGE PICKER
             Column(
-              // content camera
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -133,7 +117,6 @@ class PresenceRemoteView extends GetView<PresenceRemoteController> {
                 ),
               ],
             ),
-            // button
             TextButton(
               onPressed: () {
                 controller.image.value = File("");
@@ -146,31 +129,14 @@ class PresenceRemoteView extends GetView<PresenceRemoteController> {
                 ),
               ),
             ),
-            const SizedBox(height: 20),
-            // button absen kehadiran
             SizedBox(
               height: 50,
               width: Get.width,
               child: Obx(
                 () => ElevatedButton(
                   onPressed: () {
-                    if (controller.isLoading.value != true) {
-                      if (controller.image.value.path != "") {
-                        CustomAlertDialog.showDialog(
-                            context: Get.context!,
-                            title:
-                                "Apakah Anda yakin ingin melakukan absen 'Masuk' ?",
-                            message:
-                                "Silahkan konfirmasi terlebih dahulu sebelum melakukan absen kehadiran",
-                            isLoading: controller.isLoading,
-                            onConfirm: () => controller.uploadImage(),
-                            onCancel: () => Get.back());
-                      } else {
-                        CustomToast.infoToast(
-                            "Foto diri masih kosong",
-                            "Silahkan foto diri terlebih dahulu sebelum melakukan absen kehadiran",
-                            Get.context!);
-                      }
+                    if (controller.isLoading.isFalse) {
+                      controller.requestSakit();
                     }
                   },
                   style: ElevatedButton.styleFrom(
@@ -183,7 +149,7 @@ class PresenceRemoteView extends GetView<PresenceRemoteController> {
                   ),
                   child: (controller.isLoading.isFalse)
                       ? Text(
-                          'Absen Kehadiran',
+                          'Kirim permintaan sakit',
                           style: TextStyle(
                             fontSize: Constant.textSize(
                                 context: context, fontSize: 14),
@@ -198,7 +164,7 @@ class PresenceRemoteView extends GetView<PresenceRemoteController> {
                         ),
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),

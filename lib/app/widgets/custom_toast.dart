@@ -23,7 +23,7 @@ class CustomToast {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  margin: EdgeInsets.only(bottom: 4.h),
+                  margin: EdgeInsets.only(bottom: 4),
                   child: Text(
                     title ?? "Berhasil",
                     style: TextStyle(
@@ -47,7 +47,7 @@ class CustomToast {
         ],
       ),
       backgroundColor: Colors.white,
-      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 14.h),
+      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
       margin: const EdgeInsets.symmetric(horizontal: 16),
       borderRadius: 8,
       boxShadows: [
@@ -80,7 +80,7 @@ class CustomToast {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  margin: EdgeInsets.only(bottom: 4.h),
+                  margin: EdgeInsets.only(bottom: 4),
                   child: Text(
                     title ?? "Berhasil",
                     style: TextStyle(
@@ -104,7 +104,7 @@ class CustomToast {
         ],
       ),
       backgroundColor: Colors.white,
-      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 14.h),
+      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
       margin: const EdgeInsets.symmetric(horizontal: 16),
       borderRadius: 8,
       boxShadows: [
@@ -137,7 +137,7 @@ class CustomToast {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  margin: EdgeInsets.only(bottom: 4.h),
+                  margin: EdgeInsets.only(bottom: 4),
                   child: Text(
                     title ?? "Pemberitahuan",
                     style: TextStyle(
@@ -161,7 +161,7 @@ class CustomToast {
         ],
       ),
       backgroundColor: Colors.white,
-      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 14.h),
+      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
       margin: const EdgeInsets.symmetric(horizontal: 16),
       borderRadius: 8,
       boxShadows: [

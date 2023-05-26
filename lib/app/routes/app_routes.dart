@@ -27,6 +27,8 @@ abstract class Routes {
   static const OVERTIME_HISTORY = _Paths.OVERTIME_HISTORY;
   static const PERIZINAN_CUTI = _Paths.PERIZINAN_CUTI;
   static const PERIZINAN_CUTI_REQUEST = _Paths.PERIZINAN_CUTI_REQUEST;
+  static const PERIZINAN_SAKIT = _Paths.PERIZINAN_SAKIT;
+  static const PERIZINAN_SAKIT_REQUEST = _Paths.PERIZINAN_SAKIT_REQUEST;
 }
 
 abstract class _Paths {
@@ -55,4 +57,6 @@ abstract class _Paths {
   static const OVERTIME_HISTORY = '/overtime-history';
   static const PERIZINAN_CUTI = '/perizinan-cuti';
   static const PERIZINAN_CUTI_REQUEST = '/perizinan-cuti-request';
+  static const PERIZINAN_SAKIT = '/perizinan-sakit';
+  static const PERIZINAN_SAKIT_REQUEST = '/perizinan-sakit-request';
 }

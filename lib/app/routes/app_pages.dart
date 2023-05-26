@@ -32,6 +32,10 @@ import '../modules/perizinan_cuti_request/bindings/perizinan_cuti_request_bindin
 import '../modules/perizinan_cuti_request/views/perizinan_cuti_request_view.dart';
 import '../modules/perizinan_request/bindings/perizinan_request_binding.dart';
 import '../modules/perizinan_request/views/perizinan_request_view.dart';
+import '../modules/perizinan_sakit/bindings/perizinan_sakit_binding.dart';
+import '../modules/perizinan_sakit/views/perizinan_sakit_view.dart';
+import '../modules/perizinan_sakit_request/bindings/perizinan_sakit_request_binding.dart';
+import '../modules/perizinan_sakit_request/views/perizinan_sakit_request_view.dart';
 import '../modules/presenceRemote/bindings/presence_remote_binding.dart';
 import '../modules/presenceRemote/views/presence_remote_view.dart';
 import '../modules/presence_detail/bindings/presence_detail_binding.dart';
@@ -183,6 +187,16 @@ class AppPages {
       name: _Paths.PERIZINAN_CUTI_REQUEST,
       page: () => const PerizinanCutiRequestView(),
       binding: PerizinanCutiRequestBinding(),
+    ),
+    GetPage(
+      name: _Paths.PERIZINAN_SAKIT,
+      page: () => const PerizinanSakitView(),
+      binding: PerizinanSakitBinding(),
+    ),
+    GetPage(
+      name: _Paths.PERIZINAN_SAKIT_REQUEST,
+      page: () => const PerizinanSakitRequestView(),
+      binding: PerizinanSakitRequestBinding(),
     ),
   ];
 }

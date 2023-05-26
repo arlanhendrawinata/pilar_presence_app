@@ -197,11 +197,11 @@ class PresenceRemoteController extends GetxController {
                 "status_area": statusArea,
               },
             });
-            Get.offAllNamed(Routes.HOME);
+            Get.offAllNamed(Routes.MY_PAGE_VIEW);
             CustomToast.successToast(
                 "Berhasil", "Absen keluar berhasil", Get.context!);
           } else {
-            Get.offAllNamed(Routes.HOME);
+            Get.offAllNamed(Routes.MY_PAGE_VIEW);
             CustomToast.infoToast(
                 "Anda telah absen hari ini",
                 "Silahkan melakukan absen kehadiran pada lain hari",

@@ -20,168 +20,161 @@ class LoginView extends GetView<LoginController> {
         }
       },
       child: Scaffold(
-        body: ScreenUtilInit(
-          designSize: ScreenUtil.defaultSize,
-          minTextAdapt: true,
-          builder: (context, child) {
-            return Stack(
+        body: Stack(
+          children: [
+            //background
+            Container(
+              width: Get.width,
+              height: Get.height,
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('assets/gradient_line.jpg'),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+            Column(
               children: [
-                //background
-                Container(
-                  width: Get.width,
-                  height: Get.height,
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('assets/gradient_line.jpg'),
-                      fit: BoxFit.cover,
+                Expanded(
+                  child: Container(
+                    width: Get.width,
+                    padding: const EdgeInsets.only(left: 20),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Pilar Kreatif Teknologi',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: Constant.textSize(
+                                context: context, fontSize: 24),
+                          ),
+                        ),
+                        // SizedBox(height: 6),
+                        Text(
+                          'Presence App',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: Constant.textSize(
+                                context: context, fontSize: 18),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
-                Column(
-                  children: [
-                    Expanded(
-                      child: Container(
-                        width: Get.width,
-                        padding: EdgeInsets.only(left: 20.w),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Pilar Kreatif Teknologi',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: Constant.textSize(
-                                    context: context, fontSize: 24),
-                              ),
-                            ),
-                            // SizedBox(height: 6),
-                            Text(
-                              'Presence App',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: Constant.textSize(
-                                    context: context, fontSize: 18),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                Container(
+                  width: Get.width,
+                  height: Get.height * 0.55,
+                  padding:
+                      const EdgeInsets.only(left: 20, right: 20, bottom: 20),
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(30),
+                      topRight: Radius.circular(30),
                     ),
-                    Container(
-                      width: Get.width,
-                      height: Get.height * 0.55,
-                      padding: const EdgeInsets.only(
-                          left: 20, right: 20, bottom: 20),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(30.r),
-                          topRight: Radius.circular(30.r),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Expanded(
+                        child: Container(
+                          alignment: Alignment.center,
+                          child: Text(
+                            "Masuk ke akun Anda",
+                            style: TextStyle(
+                              fontSize: Constant.textSize(
+                                  context: context, fontSize: 16),
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
                         ),
                       ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Expanded(
-                            child: Container(
-                              alignment: Alignment.center,
-                              child: Text(
-                                "Masuk ke akun Anda",
-                                style: TextStyle(
-                                  fontSize: Constant.textSize(
-                                      context: context, fontSize: 16),
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            ),
+                      buildEmail(context),
+                      const SizedBox(height: 16),
+                      buildPassword(context),
+                      TextButton(
+                        onPressed: () => Get.toNamed(Routes.FORGOT_PASSWORD),
+                        child: Text(
+                          "Lupa Password?",
+                          textAlign: TextAlign.end,
+                          style: TextStyle(
+                            color: primaryColor,
+                            fontSize: Constant.textSize(
+                                context: context, fontSize: 14),
                           ),
-                          buildEmail(context),
-                          SizedBox(height: 16.h),
-                          buildPassword(context),
-                          TextButton(
-                            onPressed: () =>
-                                Get.toNamed(Routes.FORGOT_PASSWORD),
-                            child: Text(
-                              "Lupa Password?",
-                              textAlign: TextAlign.end,
-                              style: TextStyle(
-                                color: primaryColor,
-                                fontSize: Constant.textSize(
-                                    context: context, fontSize: 14),
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: 16.h),
-                          buildLoginBtn(context),
-                        ],
+                        ),
                       ),
-                    )
-                  ],
-                ),
-                // pilar
-
-                // Align(
-                //   alignment: Alignment.bottomCenter,
-                //   child: SingleChildScrollView(
-                //     child: Container(
-                //       padding: EdgeInsets.symmetric(
-                //           vertical: 20.h, horizontal: 20.h),
-                //       decoration: BoxDecoration(
-                //         color: Colors.white,
-                //         borderRadius: BorderRadius.only(
-                //           topLeft: Radius.circular(30.r),
-                //           topRight: Radius.circular(30.r),
-                //         ),
-                //       ),
-                //       height: screenHeight * 0.6,
-                //       child: Column(
-                //         // crossAxisAlignment: CrossAxisAlignment.end,
-                //         children: [
-                //           Expanded(
-                //             child: Container(
-                //               alignment: Alignment.center,
-                //               child: Text(
-                //                 "Masuk ke akun Anda",
-                //                 style: TextStyle(
-                //                   fontSize: Constant.textSize(
-                //                       context: context, fontSize: 16),
-                //                   fontWeight: FontWeight.w600,
-                //                 ),
-                //               ),
-                //             ),
-                //           ),
-                //           Container(
-                //             child: buildEmail(context),
-                //           ),
-                //           SizedBox(height: 20.h),
-                //           buildPassword(context),
-                //           Align(
-                //             alignment: Alignment.centerRight,
-                //             child: TextButton(
-                //               onPressed: () =>
-                //                   Get.toNamed(Routes.FORGOT_PASSWORD),
-                //               child: Text(
-                //                 "Lupa Password?",
-                //                 textAlign: TextAlign.end,
-                //                 style: TextStyle(
-                //                   color: primaryColor,
-                //                   fontSize: Constant.textSize(
-                //                       context: context, fontSize: 14),
-                //                 ),
-                //               ),
-                //             ),
-                //           ),
-                //           SizedBox(height: 20.h),
-                //           buildLoginBtn(context),
-                //         ],
-                //       ),
-                //     ),
-                //   ),
-                // )
+                      const SizedBox(height: 16),
+                      buildLoginBtn(context),
+                    ],
+                  ),
+                )
               ],
-            );
-          },
+            ),
+            // pilar
+
+            // Align(
+            //   alignment: Alignment.bottomCenter,
+            //   child: SingleChildScrollView(
+            //     child: Container(
+            //       padding: EdgeInsets.symmetric(
+            //           vertical: 20, horizontal: 20),
+            //       decoration: BoxDecoration(
+            //         color: Colors.white,
+            //         borderRadius: BorderRadius.only(
+            //           topLeft: Radius.circular(30),
+            //           topRight: Radius.circular(30),
+            //         ),
+            //       ),
+            //       height: screenHeight * 0.6,
+            //       child: Column(
+            //         // crossAxisAlignment: CrossAxisAlignment.end,
+            //         children: [
+            //           Expanded(
+            //             child: Container(
+            //               alignment: Alignment.center,
+            //               child: Text(
+            //                 "Masuk ke akun Anda",
+            //                 style: TextStyle(
+            //                   fontSize: Constant.textSize(
+            //                       context: context, fontSize: 16),
+            //                   fontWeight: FontWeight600,
+            //                 ),
+            //               ),
+            //             ),
+            //           ),
+            //           Container(
+            //             child: buildEmail(context),
+            //           ),
+            //           SizedBox(height: 20),
+            //           buildPassword(context),
+            //           Align(
+            //             alignment: Alignment.centerRight,
+            //             child: TextButton(
+            //               onPressed: () =>
+            //                   Get.toNamed(Routes.FORGOT_PASSWORD),
+            //               child: Text(
+            //                 "Lupa Password?",
+            //                 textAlign: TextAlign.end,
+            //                 style: TextStyle(
+            //                   color: primaryColor,
+            //                   fontSize: Constant.textSize(
+            //                       context: context, fontSize: 14),
+            //                 ),
+            //               ),
+            //             ),
+            //           ),
+            //           SizedBox(height: 20),
+            //           buildLoginBtn(context),
+            //         ],
+            //       ),
+            //     ),
+            //   ),
+            // )
+          ],
         ),
       ),
     );
@@ -207,8 +200,8 @@ class LoginView extends GetView<LoginController> {
 
   Widget buildLoginBtn(BuildContext context) {
     return SizedBox(
-      height: 50.h,
-      width: MediaQuery.of(context).size.width,
+      height: 50,
+      width: Get.width,
       child: Obx(
         () => ElevatedButton(
           onPressed: () {
@@ -221,7 +214,7 @@ class LoginView extends GetView<LoginController> {
             // padding: EdgeInsets.symmetric(vertical: 18),
             elevation: 0,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8.r),
+              borderRadius: BorderRadius.circular(8),
             ),
           ),
           child: (controller.isLoading.isFalse)
@@ -231,10 +224,10 @@ class LoginView extends GetView<LoginController> {
                     fontSize: Constant.textSize(context: context, fontSize: 14),
                   ),
                 )
-              : SizedBox(
-                  height: 20.h,
-                  width: 20.w,
-                  child: const CircularProgressIndicator(
+              : const SizedBox(
+                  height: 20,
+                  width: 20,
+                  child: CircularProgressIndicator(
                     color: Colors.white,
                   ),
                 ),

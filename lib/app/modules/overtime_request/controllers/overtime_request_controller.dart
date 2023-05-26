@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pilar_presence_app/app/widgets/custom_alert_dialog.dart';
@@ -32,7 +31,7 @@ class OvertimeRequestController extends GetxController {
           if (timeStart.value != "00:00") {
             if (timeEnd.value != "00:00") {
               try {
-                await StoreToUserOvertime();
+                await storeToUserOvertime();
               } catch (e) {
                 CustomToast.dangerToast(
                     "Permintaan Lembur", "Error", Get.context!);
@@ -61,7 +60,7 @@ class OvertimeRequestController extends GetxController {
     }
   }
 
-  Future<void> StoreToUserOvertime() async {
+  Future<void> storeToUserOvertime() async {
     DateTime date = selectedDate.value;
     date = DateTime(date.year, date.month, date.day, 23);
     // Timestamp dateTimeStamp = Timestamp.fromDate(date);
@@ -115,8 +114,6 @@ class OvertimeRequestController extends GetxController {
       CustomToast.infoToast("Lembur", "Kamu telah mengirimkan ", Get.context!);
     }
   }
-
-  void StoreToAllRequestOvertime() async {}
 
   Future<String> TodayOvertimeStatus() async {
     DateTime _currentDate = DateTime.now();

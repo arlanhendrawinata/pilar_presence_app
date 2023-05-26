@@ -13,7 +13,7 @@ class CustomBottomNavigation extends GetView<PageIndexController> {
     return BottomAppBar(
         shape: const CircularNotchedRectangle(),
         notchMargin: 10,
-        child: Container(
+        child: SizedBox(
           height: 65,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -67,7 +67,7 @@ class CustomBottomNavigation extends GetView<PageIndexController> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Container(
-                          margin: EdgeInsets.only(bottom: 4),
+                          margin: const EdgeInsets.only(bottom: 4),
                           child: (controller.pageIndex.value == 1)
                               ? Icon(Ionicons.person,
                                   size: 22, color: primaryColor)

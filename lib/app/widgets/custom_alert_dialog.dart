@@ -360,7 +360,7 @@ class CustomAlertDialog {
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-                SizedBox(height: 10.h),
+                const SizedBox(height: 10),
                 Text(
                   message,
                   style: TextStyle(
@@ -416,7 +416,7 @@ class CustomAlertDialog {
               status = value;
             },
           ),
-          SizedBox(height: 20.h),
+          const SizedBox(height: 20),
           // button
           Container(
             margin: const EdgeInsets.only(bottom: 16),
@@ -524,7 +524,7 @@ class CustomAlertDialog {
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-                SizedBox(height: 10.h),
+                const SizedBox(height: 10),
                 Text(
                   message,
                   style: TextStyle(
@@ -560,7 +560,7 @@ class CustomAlertDialog {
                             ),
                           ),
                         ),
-                        SizedBox(width: 16.h),
+                        const SizedBox(width: 16),
                         Expanded(
                           flex: 6,
                           child: ElevatedButton(

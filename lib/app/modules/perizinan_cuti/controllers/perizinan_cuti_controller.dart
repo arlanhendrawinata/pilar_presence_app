@@ -52,7 +52,7 @@ class PerizinanCutiController extends GetxController {
         .collection("cuti")
         .get()
         .then((value) => value.docs.forEach((element) {
-              if (element.data()['status'] == 'approved') {
+              if (element.data()['status'] != 'rejected') {
                 int dtStart = int.parse(DateFormat.d()
                     .format(DateTime.parse(element.data()['cuti_start'])));
                 int dtEnd = int.parse(DateFormat.d()

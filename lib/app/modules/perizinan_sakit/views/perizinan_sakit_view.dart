@@ -1,26 +1,24 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
+import 'package:intl/intl.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:pilar_presence_app/app/routes/app_pages.dart';
 import 'package:pilar_presence_app/app/style/app_color.dart';
-import 'package:pilar_presence_app/app/widgets/custom_toast.dart';
+import 'package:pilar_presence_app/app/widgets/custom_alert_dialog.dart';
 import 'package:pilar_presence_app/constant.dart';
 
-import 'package:intl/intl.dart';
+import '../controllers/perizinan_sakit_controller.dart';
 
-import '../controllers/perizinan_cuti_controller.dart';
-
-class PerizinanCutiView extends GetView<PerizinanCutiController> {
-  const PerizinanCutiView({Key? key}) : super(key: key);
+class PerizinanSakitView extends GetView<PerizinanSakitController> {
+  const PerizinanSakitView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Perizinan Cuti',
+          'Perizinan Sakit',
           style: TextStyle(
             color: AppColor.secondary,
             fontSize: Constant.textSize(context: context, fontSize: 14),
@@ -28,7 +26,7 @@ class PerizinanCutiView extends GetView<PerizinanCutiController> {
         ),
         leading: ScreenUtilInit(
           builder: (context, child) => IconButton(
-            onPressed: () => Get.offAllNamed(Routes.MY_PAGE_VIEW),
+            onPressed: () => Get.back(),
             icon: Icon(
               Ionicons.arrow_back,
               color: Colors.black87,
@@ -40,19 +38,7 @@ class PerizinanCutiView extends GetView<PerizinanCutiController> {
           Padding(
             padding: const EdgeInsets.all(14),
             child: InkWell(
-              onTap: () {
-                controller.sisaCuti().then((value) {
-                  if (value > 0) {
-                    Get.toNamed(Routes.PERIZINAN_CUTI_REQUEST);
-                  } else {
-                    CustomToast.infoToast(
-                        "Perizinan Cuti",
-                        "Sisa cuti kamu telah habis, tidak dapat melakukan pengajuan cuti. Silahkan menghapus pengajuan dengan status pending.",
-                        context);
-                  }
-                });
-                // Get.toNamed(Routes.PERIZINAN_CUTI_REQUEST);
-              },
+              onTap: () => Get.toNamed(Routes.PERIZINAN_SAKIT_REQUEST),
               child: const Icon(
                 Ionicons.add_outline,
                 size: 22,
@@ -94,20 +80,20 @@ class PerizinanCutiView extends GetView<PerizinanCutiController> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Sisa Cuti",
+                            "Total Sakit",
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: Constant.textSize(
                                   context: context, fontSize: 12),
                             ),
                           ),
-                          GetBuilder<PerizinanCutiController>(
+                          GetBuilder<PerizinanSakitController>(
                             builder: (c) => FutureBuilder(
-                              future: controller.sisaCuti(),
+                              future: controller.totalSakit(),
                               builder: (context, snapshot) {
                                 if (snapshot.hasData) {
                                   return Text(
-                                    snapshot.data.toString(),
+                                    "${snapshot.data!.count}",
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       color: Colors.white60,
@@ -133,60 +119,61 @@ class PerizinanCutiView extends GetView<PerizinanCutiController> {
                       ),
                     ),
                   ),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: Container(
-                      padding: const EdgeInsets.all(20),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        image: const DecorationImage(
-                          image: AssetImage('assets/gradient_line_2.jpg'),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Total Cuti Tahun ${DateTime.now().year}",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: Constant.textSize(
-                                  context: context, fontSize: 12),
-                            ),
-                          ),
-                          GetBuilder<PerizinanCutiController>(
-                            builder: (c) => FutureBuilder(
-                              future: controller.cutiTahunan(),
-                              builder: (context, snapshot) {
-                                if (snapshot.data?.data()?['amount'] != null) {
-                                  return Text(
-                                    "${snapshot.data!.data()!['amount']}",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white60,
-                                      fontSize: Constant.textSize(
-                                          context: context, fontSize: 26),
-                                    ),
-                                  );
-                                } else {
-                                  return Text(
-                                    "00",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white60,
-                                      fontSize: Constant.textSize(
-                                          context: context, fontSize: 26),
-                                    ),
-                                  );
-                                }
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+                  // SizedBox(width: 10),
+                  // Expanded(
+                  //   child: Container(
+                  //     padding: EdgeInsets.all(20),
+                  //     decoration: BoxDecoration(
+                  //       borderRadius: BorderRadius.circular(10),
+                  //       image: DecorationImage(
+                  //         image: AssetImage('assets/gradient_line_2.jpg'),
+                  //         fit: BoxFit.cover,
+                  //       ),
+                  //     ),
+                  //     child: Column(
+                  //       crossAxisAlignment: CrossAxisAlignment.start,
+                  //       children: [
+                  //         Text(
+                  //           "Total Cuti Tahun ${DateTime.now().year}",
+                  //           style: TextStyle(
+                  //             color: Colors.white,
+                  //             fontSize: Constant.textSize(
+                  //                 context: context, fontSize: 12),
+                  //           ),
+                  //         ),
+                  //         GetBuilder<PerizinanSakitController>(
+                  //           builder: (c) => FutureBuilder(
+                  //             future: controller.cutiTahunan(),
+                  //             builder: (context, snapshot) {
+                  //               if (snapshot.data?.data()?['amount'] !=
+                  //                   null) {
+                  //                 return Text(
+                  //                   "${snapshot.data!.data()!['amount']}",
+                  //                   style: TextStyle(
+                  //                     fontWeight: FontWeight.bold,
+                  //                     color: Colors.white60,
+                  //                     fontSize: Constant.textSize(
+                  //                         context: context, fontSize: 26),
+                  //                   ),
+                  //                 );
+                  //               } else {
+                  //                 return Text(
+                  //                   "00",
+                  //                   style: TextStyle(
+                  //                     fontWeight: FontWeight.bold,
+                  //                     color: Colors.white60,
+                  //                     fontSize: Constant.textSize(
+                  //                         context: context, fontSize: 26),
+                  //                   ),
+                  //                 );
+                  //               }
+                  //             },
+                  //           ),
+                  //         ),
+                  //       ],
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
               const SizedBox(height: 10),
@@ -213,10 +200,11 @@ class PerizinanCutiView extends GetView<PerizinanCutiController> {
                                   context: context, fontSize: 12),
                             ),
                           ),
-                          GetBuilder<PerizinanCutiController>(
+                          GetBuilder<PerizinanSakitController>(
                             builder: (c) => FutureBuilder(
-                              future: controller.cutiStatus("approved"),
+                              future: controller.sakitStatus("approved"),
                               builder: (context, snapshot) {
+                                controller.sakitTahunan();
                                 if (snapshot.hasData) {
                                   return Text(
                                     "${snapshot.data!.count}",
@@ -267,9 +255,9 @@ class PerizinanCutiView extends GetView<PerizinanCutiController> {
                                   context: context, fontSize: 12),
                             ),
                           ),
-                          GetBuilder<PerizinanCutiController>(
+                          GetBuilder<PerizinanSakitController>(
                             builder: (c) => FutureBuilder(
-                              future: controller.cutiStatus("pending"),
+                              future: controller.sakitStatus("pending"),
                               builder: (context, snapshot) {
                                 if (snapshot.hasData) {
                                   return Text(
@@ -321,9 +309,9 @@ class PerizinanCutiView extends GetView<PerizinanCutiController> {
                                   context: context, fontSize: 12),
                             ),
                           ),
-                          GetBuilder<PerizinanCutiController>(
+                          GetBuilder<PerizinanSakitController>(
                             builder: (c) => FutureBuilder(
-                              future: controller.cutiStatus("rejected"),
+                              future: controller.sakitStatus("rejected"),
                               builder: (context, snapshot) {
                                 if (snapshot.hasData) {
                                   return Text(
@@ -357,20 +345,19 @@ class PerizinanCutiView extends GetView<PerizinanCutiController> {
               ),
               const SizedBox(height: 20),
               StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-                stream: controller.allDatePerizinan(),
+                stream: controller.allDateSakit(),
                 builder: (context, snapshot) {
-                  // controller.Overtime();
                   if (snapshot.data?.docs.length != null &&
                       snapshot.data?.docs.length != 0) {
                     List<QueryDocumentSnapshot<Map<String, dynamic>>>
-                        allDatePerizinanLembur = snapshot.data!.docs;
+                        allDatePerizinanSakit = snapshot.data!.docs;
                     return ListView.builder(
                       padding: const EdgeInsets.symmetric(vertical: 0),
                       shrinkWrap: true,
-                      itemCount: allDatePerizinanLembur.length,
+                      itemCount: allDatePerizinanSakit.length,
                       itemBuilder: ((context, index) {
                         Map<String, dynamic> data =
-                            allDatePerizinanLembur[index].data();
+                            allDatePerizinanSakit[index].data();
                         return Container(
                           margin: const EdgeInsets.only(bottom: 20),
                           padding: const EdgeInsets.all(20),
@@ -381,7 +368,7 @@ class PerizinanCutiView extends GetView<PerizinanCutiController> {
                             color: Colors.white,
                           ),
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Row(
                                 mainAxisAlignment:
@@ -396,6 +383,7 @@ class PerizinanCutiView extends GetView<PerizinanCutiController> {
                                           context: context, fontSize: 14),
                                     ),
                                   ),
+                                  const SizedBox(height: 5),
                                   Container(
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(5),
@@ -422,94 +410,28 @@ class PerizinanCutiView extends GetView<PerizinanCutiController> {
                                   ),
                                 ],
                               ),
-                              const SizedBox(height: 12),
-                              Container(
-                                decoration: BoxDecoration(
-                                    boxShadow: const [
-                                      BoxShadow(
-                                        offset: Offset(0, 0),
-                                        spreadRadius: 0,
-                                        blurRadius: 8,
-                                        color: Color.fromRGBO(0, 0, 0, 0.06),
-                                      )
-                                    ],
-                                    borderRadius: BorderRadius.circular(10),
-                                    color: Colors.white),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(20),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Column(
-                                        children: [
-                                          Text(
-                                            "Mulai",
-                                            style: TextStyle(
-                                              color: Colors.black87,
-                                              fontSize: Constant.textSize(
-                                                  context: context,
-                                                  fontSize: 14),
-                                            ),
-                                          ),
-                                          const SizedBox(
-                                            height: 5,
-                                          ),
-                                          Text(
-                                            DateFormat.yMd()
-                                                .format(DateTime.parse(
-                                                    data['cuti_start']))
-                                                .replaceAll("/", "-"),
-                                            style: TextStyle(
-                                              color: Colors.black87,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: Constant.textSize(
-                                                  context: context,
-                                                  fontSize: 14),
-                                            ),
-                                          ),
-                                        ],
+                              const SizedBox(width: 16),
+                              Column(
+                                children: [
+                                  TextButton(
+                                    style: TextButton.styleFrom(
+                                        minimumSize: Size.zero,
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 4, horizontal: 6),
+                                        backgroundColor: secondaryColor),
+                                    onPressed: () =>
+                                        CustomAlertDialog.showPhoto(
+                                            context: context,
+                                            photoURL: data['photoURL']),
+                                    child: Text(
+                                      "Lihat Foto",
+                                      style: TextStyle(
+                                        fontSize: Constant.textSize(
+                                            context: context, fontSize: 13),
                                       ),
-                                      Container(
-                                        width: 2,
-                                        height: 40,
-                                        color:
-                                            const Color.fromARGB(15, 0, 0, 0),
-                                      ),
-                                      Column(
-                                        children: [
-                                          Text(
-                                            "Selesai",
-                                            style: TextStyle(
-                                              color: Colors.black87,
-                                              fontSize: Constant.textSize(
-                                                  context: context,
-                                                  fontSize: 14),
-                                            ),
-                                          ),
-                                          const SizedBox(
-                                            height: 5,
-                                          ),
-                                          Text(
-                                            DateFormat.yMd()
-                                                .format(DateTime.parse(
-                                                    data['cuti_end']))
-                                                .replaceAll("/", "-"),
-                                            style: TextStyle(
-                                              color: Colors.black87,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: Constant.textSize(
-                                                  context: context,
-                                                  fontSize: 14),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
+                                    ),
                                   ),
-                                ),
+                                ],
                               ),
                             ],
                           ),
@@ -548,7 +470,7 @@ class PerizinanCutiView extends GetView<PerizinanCutiController> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "Data cuti Anda masih kosong.",
+                                  "Data sakit Anda masih kosong.",
                                   style: TextStyle(
                                     color: infoColor,
                                     fontSize: Constant.textSize(

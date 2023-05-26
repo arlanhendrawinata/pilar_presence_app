@@ -24,7 +24,7 @@ class AdminMenuView extends GetView<AdminMenuController> {
         ),
         leading: ScreenUtilInit(
           builder: (context, child) => IconButton(
-            onPressed: () => Get.toNamed(Routes.HOME),
+            onPressed: () => Get.offAllNamed(Routes.MY_PAGE_VIEW),
             icon: Icon(
               Ionicons.arrow_back,
               color: Colors.black87,

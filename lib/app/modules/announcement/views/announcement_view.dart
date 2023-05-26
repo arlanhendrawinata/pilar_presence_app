@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
@@ -14,73 +13,64 @@ class AnnouncementView extends GetView<AnnouncementController> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: ScreenUtilInit(
-            builder: (context, child) => Text(
-              'Pengumuman',
-              style: TextStyle(
-                color: AppColor.secondary,
-                fontSize: Constant.textSize(context: context, fontSize: 14),
-              ),
+          title: Text(
+            'Pengumuman',
+            style: TextStyle(
+              color: AppColor.secondary,
+              fontSize: Constant.textSize(context: context, fontSize: 14),
             ),
           ),
-          leading: ScreenUtilInit(
-            builder: (context, child) => IconButton(
-              onPressed: () => Get.back(),
-              icon: Icon(
-                Ionicons.arrow_back,
-                color: Colors.black87,
-                size: 22.sp,
-              ),
+          leading: IconButton(
+            onPressed: () => Get.back(),
+            icon: const Icon(
+              Ionicons.arrow_back,
+              color: Colors.black87,
+              size: 22,
             ),
           ),
           actions: [
-            ScreenUtilInit(
-              minTextAdapt: true,
-              builder: (context, child) => Container(
-                margin: EdgeInsets.symmetric(vertical: 4.h, horizontal: 4.w),
-                decoration: BoxDecoration(
-                  color: Color(0xfff8dcdf),
-                  borderRadius: BorderRadius.circular(10.r),
-                ),
-                child: IconButton(
-                  onPressed: () => print("filter"),
-                  icon: Icon(
-                    Ionicons.options_outline,
-                    size: 22.w,
-                    color: primaryColor,
-                  ),
+            Container(
+              margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
+              decoration: BoxDecoration(
+                color: const Color(0xfff8dcdf),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: IconButton(
+                onPressed: () => print("filter"),
+                icon: Icon(
+                  Ionicons.options_outline,
+                  size: 22,
+                  color: primaryColor,
                 ),
               ),
-            )
+            ),
           ],
           backgroundColor: Colors.white,
           elevation: 0,
           centerTitle: true,
           bottom: PreferredSize(
-            preferredSize: Size.fromHeight(1),
+            preferredSize: const Size.fromHeight(1),
             child: Container(
-              width: MediaQuery.of(context).size.width,
+              width: Get.width,
               height: 1,
               color: AppColor.secondaryExtraSoft,
             ),
           ),
         ),
-        body: ScreenUtilInit(
-          minTextAdapt: true,
-          builder: (context, child) => Container(
-            height: MediaQuery.of(context).size.height,
+        body: SizedBox(
+            height: Get.height,
             child: ListView.builder(
               shrinkWrap: true,
               itemCount: 3,
               itemBuilder: ((context, index) {
                 return Container(
-                    padding:
-                        EdgeInsets.symmetric(vertical: 20.h, horizontal: 20.w),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 20, horizontal: 20),
                     // margin: EdgeInsets.all(20),
-                    margin: EdgeInsets.only(
-                        bottom: 20.h, left: 20.w, right: 20.w, top: 0),
+                    margin: const EdgeInsets.only(
+                        bottom: 20, left: 20, right: 20, top: 0),
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10.r),
+                      borderRadius: BorderRadius.circular(10),
                       color: Colors.white,
                       boxShadow: [
                         BoxShadow(
@@ -94,11 +84,11 @@ class AnnouncementView extends GetView<AnnouncementController> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
-                          height: 20.h,
-                          width: 60.w,
+                          height: 20,
+                          width: 60,
                           decoration: BoxDecoration(
                             color: secondaryColor,
-                            borderRadius: BorderRadius.circular(4.r),
+                            borderRadius: BorderRadius.circular(4),
                           ),
                           child: Text(
                             "Libur",
@@ -110,7 +100,7 @@ class AnnouncementView extends GetView<AnnouncementController> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 10.h),
+                        const SizedBox(height: 10),
                         Text(
                           "How Facebook Preys on Our Mental Health",
                           style: TextStyle(
@@ -121,7 +111,7 @@ class AnnouncementView extends GetView<AnnouncementController> {
                             overflow: TextOverflow.clip,
                           ),
                         ),
-                        SizedBox(height: 4.h),
+                        const SizedBox(height: 4),
                         Text(
                           "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
                           style: TextStyle(
@@ -130,7 +120,7 @@ class AnnouncementView extends GetView<AnnouncementController> {
                             overflow: TextOverflow.ellipsis,
                           ),
                         ),
-                        SizedBox(height: 20.h),
+                        const SizedBox(height: 20),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -155,8 +145,6 @@ class AnnouncementView extends GetView<AnnouncementController> {
                       ],
                     ));
               }),
-            ),
-          ),
-        ));
+            )));
   }
 }

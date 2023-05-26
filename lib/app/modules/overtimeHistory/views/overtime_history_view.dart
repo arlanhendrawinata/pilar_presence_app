@@ -15,13 +15,11 @@ class OvertimeHistoryView extends GetView<OvertimeHistoryController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: ScreenUtilInit(
-          builder: (context, child) => Text(
-            'Histori Kehadiran',
-            style: TextStyle(
-              color: AppColor.secondary,
-              fontSize: Constant.textSize(context: context, fontSize: 14),
-            ),
+        title: Text(
+          'Histori Kehadiran',
+          style: TextStyle(
+            color: AppColor.secondary,
+            fontSize: Constant.textSize(context: context, fontSize: 14),
           ),
         ),
         leading: ScreenUtilInit(
@@ -35,43 +33,40 @@ class OvertimeHistoryView extends GetView<OvertimeHistoryController> {
           ),
         ),
         actions: [
-          ScreenUtilInit(
-            minTextAdapt: true,
-            builder: (context, child) => Container(
-              margin: EdgeInsets.symmetric(vertical: 4.h, horizontal: 4.w),
-              decoration: BoxDecoration(
-                color: const Color(0xfff8dcdf),
-                borderRadius: BorderRadius.circular(10.r),
-              ),
-              child: IconButton(
-                onPressed: () => Get.dialog(
-                  Dialog(
-                    child: Container(
-                      height: 400,
-                      padding: const EdgeInsets.all(10),
-                      child: SfDateRangePicker(
-                        selectionMode: DateRangePickerSelectionMode.range,
-                        showActionButtons: true,
-                        onCancel: () => Get.back(),
-                        onSubmit: (obj) {
-                          if (obj != null) {
-                            if ((obj as PickerDateRange).endDate != null) {
-                              controller.pickDate(obj.startDate!, obj.endDate!);
-                            }
+          Container(
+            margin: EdgeInsets.symmetric(vertical: 4.h, horizontal: 4.w),
+            decoration: BoxDecoration(
+              color: const Color(0xfff8dcdf),
+              borderRadius: BorderRadius.circular(10.r),
+            ),
+            child: IconButton(
+              onPressed: () => Get.dialog(
+                Dialog(
+                  child: Container(
+                    height: 400,
+                    padding: const EdgeInsets.all(10),
+                    child: SfDateRangePicker(
+                      selectionMode: DateRangePickerSelectionMode.range,
+                      showActionButtons: true,
+                      onCancel: () => Get.back(),
+                      onSubmit: (obj) {
+                        if (obj != null) {
+                          if ((obj as PickerDateRange).endDate != null) {
+                            controller.pickDate(obj.startDate!, obj.endDate!);
                           }
-                        },
-                      ),
+                        }
+                      },
                     ),
                   ),
                 ),
-                icon: Icon(
-                  Ionicons.options_outline,
-                  size: 22.w,
-                  color: primaryColor,
-                ),
+              ),
+              icon: Icon(
+                Ionicons.options_outline,
+                size: 22.w,
+                color: primaryColor,
               ),
             ),
-          )
+          ),
         ],
         backgroundColor: Colors.white,
         elevation: 0,
