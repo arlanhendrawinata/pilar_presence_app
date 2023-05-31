@@ -47,7 +47,7 @@ class HomeView extends GetView<HomeController> {
                             //* USER PROFILE
                             userProfile(photoURL, profileName, context),
                             const SizedBox(height: 30),
-
+                            // ResponsiveViewCases1(),
                             //stream presence
                             StreamBuilder<
                                 DocumentSnapshot<Map<String, dynamic>>>(
@@ -1336,5 +1336,19 @@ class HomeView extends GetView<HomeController> {
         ),
       ],
     );
+  }
+}
+
+class ResponsiveViewCases1 extends GetResponsiveView<HomeController> {
+  @override
+  Widget builder() {
+    print("isTablet : ${screen.isTablet}");
+    return screen.isTablet
+        ? Container(
+            color: screen.isTablet ? Colors.red : Colors.indigo,
+            child: const Icon(Icons.desktop_windows, size: 75))
+        : screen.isPhone
+            ? const Icon(Icons.phone, size: 75)
+            : const Icon(Icons.info, size: 75);
   }
 }

@@ -63,31 +63,6 @@ class PerizinanCutiRequestView extends GetView<PerizinanCutiRequestController> {
                   child: InkWell(
                     onTap: () {
                       controller.pickStartDate(context);
-                      // DatePicker.showDatePicker(
-                      //   context,
-                      //   showTitleActions: true,
-                      //   currentTime: controller.dateStart ?? DateTime.now(),
-                      //   onConfirm: (time) {
-                      //     if (time.month == DateTime.now().month) {
-                      //       if (time.day > (DateTime.now().day + 2)) {
-                      //         controller.dateStart = time;
-                      //         controller.defDateStart.value = DateFormat.yMd()
-                      //             .format(time)
-                      //             eplaceAll("/", "-");
-                      //       } else {
-                      //         CustomToast.infoToast(
-                      //             "Perizinan Cuti",
-                      //             "Pengajuan dapat dilakukan minimal 3 hari kedepan",
-                      //             context);
-                      //       }
-                      //     } else if (time.month > DateTime.now().month) {
-                      //       controller.dateStart = time;
-                      //       controller.defDateStart.value = DateFormat.yMd()
-                      //           .format(time)
-                      //           eplaceAll("/", "-");
-                      //     }
-                      //   },
-                      // );
                     },
                     child: Container(
                       padding: const EdgeInsets.all(20),
@@ -133,38 +108,6 @@ class PerizinanCutiRequestView extends GetView<PerizinanCutiRequestController> {
                             "Silahkan mengisi tanggal mulai terlebih dahulu",
                             context);
                       }
-                      // DatePicker.showDatePicker(
-                      //   context,
-                      //   showTitleActions: true,
-                      //   currentTime: (DateFormat.yMd()
-                      //               .format(DateTime.now())
-                      //               eplaceAll("/", "-") !=
-                      //           controller.defDateEnd.value)
-                      //       ? controller.dateEnd
-                      //       : (controller.dateStart != null)
-                      //           ? controller.dateStart
-                      //           : DateTime.now(),
-                      //   onConfirm: (time) {
-                      //     if (controller.dateStart != null) {
-                      //       if (time.compareTo(controller.dateStart!) < 0) {
-                      //         CustomToast.infoToast(
-                      //             "Pengajuan Cuti",
-                      //             "Tanggal selesai salah. Tidak diperbolehkan mengisi tanggal selesai sebelum tanggal mulai.",
-                      //             context);
-                      //       } else {
-                      //         controller.dateEnd = time;
-                      //         controller.defDateEnd.value = DateFormat.yMd()
-                      //             .format(time)
-                      //             eplaceAll("/", "-");
-                      //       }
-                      //     } else {
-                      //       CustomToast.infoToast(
-                      //           "Pengajuan Cuti",
-                      //           "Silahkan mengisi tanggal mulai terlebih dahulu",
-                      //           context);
-                      //     }
-                      //   },
-                      // );
                     },
                     child: Container(
                       padding: const EdgeInsets.all(20),

@@ -93,13 +93,13 @@ class PresenceController extends GetxController {
     Map<String, dynamic>? dataTodayDoc = todayDoc.data();
 
     if (todayDoc.exists) {
-      print('todayDoc : ${todayDoc.exists}');
+      // print('todayDoc : ${todayDoc.exists}');
       if (dataTodayDoc?["checkOut"] == null &&
           dataTodayDoc?["checkIn"] != null) {
-        print('checkout : ${todayDoc.exists}');
+        // print('checkout : ${todayDoc.exists}');
         return false;
       } else {
-        print('ispresence : ${todayDoc.exists}');
+        // print('ispresence : ${todayDoc.exists}');
         return true;
       }
     } else {
@@ -131,7 +131,7 @@ class PresenceController extends GetxController {
       } catch (e) {
         CustomToast.dangerToast(
             "Terjadi Kesalahan", "Absen kehadiran gagal", Get.context!);
-        print(e);
+        // print(e);
       }
     } else {
       CustomToast.dangerToast(
@@ -155,10 +155,10 @@ class PresenceController extends GetxController {
     final _currentTime = double.parse(DateFormat('H.mm').format(_currentDate));
     String _presence_status = "ontime";
     if (_currentTime <= _pilarTime) {
-      print('ontime');
+      // print('ontime');
       _presence_status = "ontime";
     } else {
-      print('late');
+      // print('late');
       _presence_status = "late";
     }
 

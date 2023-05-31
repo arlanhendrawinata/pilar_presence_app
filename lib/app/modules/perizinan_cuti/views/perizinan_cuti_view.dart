@@ -41,16 +41,26 @@ class PerizinanCutiView extends GetView<PerizinanCutiController> {
             padding: const EdgeInsets.all(14),
             child: InkWell(
               onTap: () {
-                controller.sisaCuti().then((value) {
-                  if (value > 0) {
-                    Get.toNamed(Routes.PERIZINAN_CUTI_REQUEST);
+                controller.cutiTahunan().then((value) {
+                  if (value.exists) {
+                    controller.sisaCuti().then((value) {
+                      if (value > 0) {
+                        Get.toNamed(Routes.PERIZINAN_CUTI_REQUEST);
+                      } else {
+                        CustomToast.infoToast(
+                            "Perizinan Cuti",
+                            "Sisa cuti kamu telah habis, tidak dapat melakukan pengajuan cuti. Silahkan menghapus pengajuan dengan status pending.",
+                            context);
+                      }
+                    });
                   } else {
-                    CustomToast.infoToast(
+                    CustomToast.dangerToast(
                         "Perizinan Cuti",
-                        "Sisa cuti kamu telah habis, tidak dapat melakukan pengajuan cuti. Silahkan menghapus pengajuan dengan status pending.",
+                        "Tidak dapat melakukan pengajuan cuti. Admin belum set cuti pada tahun ini.",
                         context);
                   }
                 });
+
                 // Get.toNamed(Routes.PERIZINAN_CUTI_REQUEST);
               },
               child: const Icon(

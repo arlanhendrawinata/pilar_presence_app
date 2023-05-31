@@ -995,4 +995,125 @@ class CustomAlertDialog {
       ),
     );
   }
+
+  static addCutiTahunan({
+    required RxBool isLoading,
+    required BuildContext context,
+    required DateTime selectedDate,
+    required void Function() onConfirm,
+    required void Function() onCancel,
+  }) {
+    Get.defaultDialog(
+      title: "",
+      barrierDismissible: false,
+      contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 0),
+      radius: 8,
+      titlePadding: EdgeInsets.zero,
+      titleStyle: const TextStyle(fontSize: 0),
+      content: Column(
+        children: [
+          Container(
+            margin: const EdgeInsets.only(bottom: 32, top: 24),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Tambah Cuti Tahunan",
+                  style: TextStyle(
+                    fontSize: Constant.textSize(context: context, fontSize: 16),
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  "Silahkan mengisi kolom inputan untuk menambah cuti tahunan.",
+                  style: TextStyle(
+                    color: BlackSoftColor,
+                    fontSize: Constant.textSize(context: context, fontSize: 14),
+                  ),
+                ),
+                const SizedBox(height: 20),
+                TextButton(
+                  onPressed: () {
+                    YearPicker(
+                        firstDate: DateTime.now(),
+                        lastDate: DateTime(DateTime.now().year + 3, 13, 0),
+                        selectedDate: selectedDate,
+                        onChanged: (date) {
+                          selectedDate = date;
+                        });
+                  },
+                  child: Text("select year"),
+                )
+              ],
+            ),
+          ),
+          Container(
+            margin: const EdgeInsets.only(bottom: 14),
+            child: Obx(
+              () => (!isLoading.value)
+                  ? Row(
+                      children: [
+                        Expanded(
+                          flex: 6,
+                          child: ElevatedButton(
+                            onPressed: onCancel,
+                            style: ElevatedButton.styleFrom(
+                              padding: const EdgeInsets.symmetric(vertical: 12),
+                              backgroundColor: Colors.black12,
+                              elevation: 0,
+                            ),
+                            child: Text(
+                              "batal",
+                              style: TextStyle(
+                                color: Colors.black87,
+                                fontSize: Constant.textSize(
+                                    context: context, fontSize: 14),
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 16),
+                        Expanded(
+                          flex: 6,
+                          child: ElevatedButton(
+                            onPressed: onConfirm,
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: successColor,
+                              padding: const EdgeInsets.symmetric(vertical: 12),
+                              elevation: 0,
+                            ),
+                            child: Text(
+                              "tambah",
+                              style: TextStyle(
+                                fontSize: Constant.textSize(
+                                    context: context, fontSize: 14),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
+                  : ElevatedButton(
+                      onPressed: (!isLoading.value) ? onConfirm : () {},
+                      style: ElevatedButton.styleFrom(
+                        minimumSize: const Size.fromHeight(40),
+                        backgroundColor: successColor,
+                        padding: const EdgeInsets.symmetric(vertical: 12),
+                        elevation: 0,
+                      ),
+                      child: Text(
+                        (!isLoading.value) ? "tambah" : "loading...",
+                        style: TextStyle(
+                          fontSize:
+                              Constant.textSize(context: context, fontSize: 14),
+                        ),
+                      ),
+                    ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
 }

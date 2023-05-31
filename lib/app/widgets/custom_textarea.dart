@@ -41,7 +41,7 @@ class _CustomTextAreaState extends State<CustomTextArea> {
           color: (widget.disabled == false)
               ? Colors.transparent
               : AppColor.primaryExtraSoft,
-          borderRadius: BorderRadius.circular(8.r),
+          borderRadius: BorderRadius.circular(8),
           border: Border.all(width: 1, color: AppColor.secondaryExtraSoft),
         ),
         child: TextField(

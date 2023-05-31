@@ -26,7 +26,7 @@ class AdminMenuController extends GetxController {
               .where("status", isEqualTo: "pending")
               .get();
           final data = queryData.docs.map((e) => e.data()).toList();
-          print(data);
+          // print(data);
           if (data.length > 0) {
             for (var k = 0; k < data.length; k++) {
               newData.add(data[k]);

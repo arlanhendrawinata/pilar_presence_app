@@ -23,9 +23,30 @@ class PerizinanCutiRequestController extends GetxController {
 
   RxString defDateEnd = ''.obs;
 
+  int daysBetween(DateTime from, DateTime to) {
+    from = DateTime(from.year, from.month, from.day);
+    to = DateTime(to.year, to.month, to.day);
+    return (to.difference(from).inHours / 24).round();
+  }
+
   Future<DocumentSnapshot<Map<String, dynamic>>> cutiTahunan() async {
     int year = DateTime.now().year;
     return await firestore.collection("cuti").doc("$year").get();
+  }
+
+  Future<bool> tes() async {
+    String uid = await auth.currentUser!.uid;
+    DateTime currentDate = DateTime.now();
+    String formattedCurrentDate =
+        DateFormat.yMd().format(currentDate).replaceAll("/", "-");
+
+    return await firestore
+        .collection("perizinan")
+        .doc(uid)
+        .collection("cuti")
+        .doc(formattedCurrentDate)
+        .get()
+        .then((value) => value.exists);
   }
 
   Future<int> getCuti() async {
@@ -58,12 +79,21 @@ class PerizinanCutiRequestController extends GetxController {
   }
 
   requestCuti() async {
+    // print(await tes());
     if (dateStart != null && dateEnd != null && ketCutiC.text != "") {
       if (dateStart!.compareTo(dateEnd!) < 0) {
-        int countDateRequest = (dateEnd!.day - dateStart!.day) + 1;
+        // print("tes: ${daysBetween(dateStart!, dateEnd!) + 1}");
+        int countDateRequest = daysBetween(dateStart!, dateEnd!) + 1;
         int _sisaCuti = await sisaCuti().then((value) => value);
         if (_sisaCuti - countDateRequest >= 0) {
-          await addCuti();
+          if (!await tes()) {
+            await addCuti();
+          } else {
+            CustomToast.dangerToast(
+                "Pengajuan Cuti",
+                "Kamu telah melakukan pengajuan cuti hari ini. Silahkan melakukan pengajuan besok.",
+                Get.context!);
+          }
         } else {
           CustomToast.dangerToast(
               "Pengajuan Cuti",
@@ -117,7 +147,7 @@ class PerizinanCutiRequestController extends GetxController {
   pickStartDate(BuildContext context) async {
     DateTime now = DateTime(
         DateTime.now().year, DateTime.now().month, DateTime.now().day + 3);
-    DateTime lastday = DateTime(now.year, now.month + 1, 0);
+    DateTime lastday = DateTime(now.year, 13, 0);
     DateTime? pickerDate = await showDatePicker(
       context: context,
       initialDate: now,
@@ -127,7 +157,7 @@ class PerizinanCutiRequestController extends GetxController {
 
     if (pickerDate != null) {
       dateStart =
-          DateTime(pickerDate.year, pickerDate.month, pickerDate.day, 23);
+          DateTime(pickerDate.year, pickerDate.month, pickerDate.day, 12);
       defDateStart.value =
           DateFormat.yMd().format(dateStart!).replaceAll("/", "-");
     }
@@ -136,7 +166,7 @@ class PerizinanCutiRequestController extends GetxController {
   pickEndDate(BuildContext context) async {
     DateTime now = DateTime(
         DateTime.now().year, DateTime.now().month, DateTime.now().day + 3);
-    DateTime lastday = DateTime(now.year, now.month + 1, 0);
+    DateTime lastday = DateTime(now.year, 13, 0);
     DateTime? pickerDate = await showDatePicker(
       context: context,
       initialDate: now,

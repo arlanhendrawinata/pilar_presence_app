@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
@@ -84,48 +83,7 @@ class PerizinanRequestView extends GetView<PerizinanRequestController> {
                 },
               ),
             ),
-
-            // StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-            //   stream: controller.streamOvertime(),
-            //   builder: (context, snapshot) {
-            //     if (snapshotasData) {
-            //       List<QueryDocumentSnapshot<Map<String, dynamic>>> data =
-            //           snapshot.data!.docs;
-            //       print(controller.getData());
-            //       // return Container();
-            //       return cardRequest(context, "Lembur", data);
-            //     } else {
-            //       return cardRequestIsNull(context, "Lembur");
-            //     }
-            //   },
-            // ),
-            //izin
-            // StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-            //   stream: controller.streamOvertime("izin"),
-            //   builder: (context, snapshot) {
-            //     if (snapshotasData) {
-            //       List<QueryDocumentSnapshot<Map<String, dynamic>>> data =
-            //           snapshot.data!.docs;
-            //       return cardRequest(context, "Izin", data);
-            //     } else {
-            //       return cardRequestIsNull(context, "Izin");
-            //     }
-            //   },
-            // ),
             const SizedBox(height: 20),
-            //cuti
-            // StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-            //   stream: controller.streamOvertime("cuti"),
-            //   builder: (context, snapshot) {
-            //     if (snapshotasData) {
-            //       List<QueryDocumentSnapshot<Map<String, dynamic>>> data =
-            //           snapshot.data!.docs;
-            //       return cardRequest(context, "Cuti", data);
-            //     } else {
-            //       return cardRequestIsNull(context, "Cuti");
-            //     }
-            //   },
-            // ),
           ],
         ),
       ),
@@ -223,7 +181,7 @@ class PerizinanRequestView extends GetView<PerizinanRequestController> {
                     width: 1.5,
                     color: AppColor.secondaryExtraSoft,
                   ),
-                  borderRadius: BorderRadius.circular(10.r),
+                  borderRadius: BorderRadius.circular(10),
                   image: const DecorationImage(
                     image: AssetImage('assets/gradient_line.jpg'),
                     fit: BoxFit.cover,

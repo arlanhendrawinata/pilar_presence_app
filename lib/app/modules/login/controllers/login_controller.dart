@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:pilar_presence_app/app/routes/app_pages.dart';
@@ -30,12 +31,6 @@ class LoginController extends GetxController {
     regExp.hasMatch(em) ? isValidEmail = true : isValidEmail = false;
 
     return isValidEmail;
-  }
-
-  @override
-  void onInit() {
-    super.onInit();
-    // print("tayo login");
   }
 
   forgotPassword() async {
@@ -214,5 +209,24 @@ class LoginController extends GetxController {
           "Terjadi Kesalahan", "Kolom input tidak boleh kosong", Get.context!);
       // isLoading.value = false;
     }
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeRight,
+      DeviceOrientation.landscapeLeft,
+    ]);
+  }
+
+  @override
+  void onReady() {
+    super.onReady();
+  }
+
+  @override
+  void onClose() {
+    super.onClose();
   }
 }

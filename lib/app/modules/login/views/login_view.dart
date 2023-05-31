@@ -11,6 +11,7 @@ class LoginView extends GetView<LoginController> {
   const LoginView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    var isPortrait = MediaQuery.of(context).orientation == Orientation.portrait;
     return GestureDetector(
       onTap: () {
         FocusScopeNode currentFocus = FocusScope.of(context);
@@ -20,161 +21,101 @@ class LoginView extends GetView<LoginController> {
         }
       },
       child: Scaffold(
-        body: Stack(
-          children: [
-            //background
-            Container(
-              width: Get.width,
-              height: Get.height,
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('assets/gradient_line.jpg'),
-                  fit: BoxFit.cover,
+        body: SingleChildScrollView(
+          child: Stack(
+            fit: StackFit.loose,
+            children: [
+              //background
+              Container(
+                width: Get.width,
+                height: Get.height,
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage('assets/gradient_line.jpg'),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                child: Column(
+                  children: [
+                    Expanded(
+                      flex: isPortrait ? 2 : 3,
+                      child: Container(
+                        padding: const EdgeInsets.all(30),
+                        width: Get.width,
+                        // height: Get.height * 0.45,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Pilar Kreatif Teknologi',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: Constant.textSize(
+                                    context: context, fontSize: 24),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      flex: isPortrait ? 2 : 4,
+                      child: Container(
+                        width: Get.width,
+                        // height: Get.height * 0.55,
+                        padding: const EdgeInsets.only(
+                            left: 20, right: 20, bottom: 20),
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(30),
+                            topRight: Radius.circular(30),
+                          ),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Expanded(
+                              child: Container(
+                                alignment: Alignment.center,
+                                child: Text(
+                                  "Masuk ke akun Anda",
+                                  style: TextStyle(
+                                    fontSize: Constant.textSize(
+                                        context: context, fontSize: 14),
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            buildEmail(context),
+                            const SizedBox(height: 16),
+                            buildPassword(context),
+                            TextButton(
+                              onPressed: () =>
+                                  Get.toNamed(Routes.FORGOT_PASSWORD),
+                              child: Text(
+                                "Lupa Password?",
+                                textAlign: TextAlign.end,
+                                style: TextStyle(
+                                  color: primaryColor,
+                                  fontSize: Constant.textSize(
+                                      context: context, fontSize: 14),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 16),
+                            buildLoginBtn(context),
+                          ],
+                        ),
+                      ),
+                    )
+                  ],
                 ),
               ),
-            ),
-            Column(
-              children: [
-                Expanded(
-                  child: Container(
-                    width: Get.width,
-                    padding: const EdgeInsets.only(left: 20),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Pilar Kreatif Teknologi',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: Constant.textSize(
-                                context: context, fontSize: 24),
-                          ),
-                        ),
-                        // SizedBox(height: 6),
-                        Text(
-                          'Presence App',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: Constant.textSize(
-                                context: context, fontSize: 18),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                Container(
-                  width: Get.width,
-                  height: Get.height * 0.55,
-                  padding:
-                      const EdgeInsets.only(left: 20, right: 20, bottom: 20),
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(30),
-                      topRight: Radius.circular(30),
-                    ),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Expanded(
-                        child: Container(
-                          alignment: Alignment.center,
-                          child: Text(
-                            "Masuk ke akun Anda",
-                            style: TextStyle(
-                              fontSize: Constant.textSize(
-                                  context: context, fontSize: 16),
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ),
-                      ),
-                      buildEmail(context),
-                      const SizedBox(height: 16),
-                      buildPassword(context),
-                      TextButton(
-                        onPressed: () => Get.toNamed(Routes.FORGOT_PASSWORD),
-                        child: Text(
-                          "Lupa Password?",
-                          textAlign: TextAlign.end,
-                          style: TextStyle(
-                            color: primaryColor,
-                            fontSize: Constant.textSize(
-                                context: context, fontSize: 14),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                      buildLoginBtn(context),
-                    ],
-                  ),
-                )
-              ],
-            ),
-            // pilar
-
-            // Align(
-            //   alignment: Alignment.bottomCenter,
-            //   child: SingleChildScrollView(
-            //     child: Container(
-            //       padding: EdgeInsets.symmetric(
-            //           vertical: 20, horizontal: 20),
-            //       decoration: BoxDecoration(
-            //         color: Colors.white,
-            //         borderRadius: BorderRadius.only(
-            //           topLeft: Radius.circular(30),
-            //           topRight: Radius.circular(30),
-            //         ),
-            //       ),
-            //       height: screenHeight * 0.6,
-            //       child: Column(
-            //         // crossAxisAlignment: CrossAxisAlignment.end,
-            //         children: [
-            //           Expanded(
-            //             child: Container(
-            //               alignment: Alignment.center,
-            //               child: Text(
-            //                 "Masuk ke akun Anda",
-            //                 style: TextStyle(
-            //                   fontSize: Constant.textSize(
-            //                       context: context, fontSize: 16),
-            //                   fontWeight: FontWeight600,
-            //                 ),
-            //               ),
-            //             ),
-            //           ),
-            //           Container(
-            //             child: buildEmail(context),
-            //           ),
-            //           SizedBox(height: 20),
-            //           buildPassword(context),
-            //           Align(
-            //             alignment: Alignment.centerRight,
-            //             child: TextButton(
-            //               onPressed: () =>
-            //                   Get.toNamed(Routes.FORGOT_PASSWORD),
-            //               child: Text(
-            //                 "Lupa Password?",
-            //                 textAlign: TextAlign.end,
-            //                 style: TextStyle(
-            //                   color: primaryColor,
-            //                   fontSize: Constant.textSize(
-            //                       context: context, fontSize: 14),
-            //                 ),
-            //               ),
-            //             ),
-            //           ),
-            //           SizedBox(height: 20),
-            //           buildLoginBtn(context),
-            //         ],
-            //       ),
-            //     ),
-            //   ),
-            // )
-          ],
+            ],
+          ),
         ),
       ),
     );

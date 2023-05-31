@@ -29,6 +29,7 @@ abstract class Routes {
   static const PERIZINAN_CUTI_REQUEST = _Paths.PERIZINAN_CUTI_REQUEST;
   static const PERIZINAN_SAKIT = _Paths.PERIZINAN_SAKIT;
   static const PERIZINAN_SAKIT_REQUEST = _Paths.PERIZINAN_SAKIT_REQUEST;
+  static const CUTI_TAHUNAN_ADD = _Paths.CUTI_TAHUNAN_ADD;
 }
 
 abstract class _Paths {
@@ -59,4 +60,5 @@ abstract class _Paths {
   static const PERIZINAN_CUTI_REQUEST = '/perizinan-cuti-request';
   static const PERIZINAN_SAKIT = '/perizinan-sakit';
   static const PERIZINAN_SAKIT_REQUEST = '/perizinan-sakit-request';
+  static const CUTI_TAHUNAN_ADD = '/cuti-tahunan-add';
 }

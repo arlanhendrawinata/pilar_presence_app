@@ -51,10 +51,10 @@ void main() async {
   });
 
   // device orientations
-  SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-    DeviceOrientation.portraitDown,
-  ]);
+  // SystemChrome.setPreferredOrientations([
+  //   DeviceOrientation.portraitUp,
+  //   DeviceOrientation.portraitDown,
+  // ]);
 
   // bindings
   Get.put(PageIndexController(), permanent: true);
@@ -90,7 +90,7 @@ void main() async {
                   ),
                 ));
           }
-          print("Main.dart : ${snapshot.data}");
+          // print("Main.dart : ${snapshot.data}");
           return GetMaterialApp(
             theme: ThemeData(
               scaffoldBackgroundColor: Colors.white,

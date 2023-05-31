@@ -27,7 +27,7 @@ class PerizinanCutiController extends GetxController {
 
   Future<DocumentSnapshot<Map<String, dynamic>>> cutiTahunan() async {
     int year = DateTime.now().year;
-    return await firestore.collection("cuti").doc("${year}").get();
+    return await firestore.collection("cuti").doc("$year").get();
   }
 
   Future<AggregateQuerySnapshot> cutiStatus(String status) async {
@@ -65,12 +65,13 @@ class PerizinanCutiController extends GetxController {
 
   Future<int> sisaCuti() async {
     int totalCuti = 12;
+    Future<bool> tahunan = cutiTahunan().then((value) => value.exists);
+    if (await tahunan) {
+      Future<dynamic> amountCuti =
+          cutiTahunan().then((value) => value.data()!['amount']);
+      totalCuti = int.parse(await amountCuti);
+    }
     int dateminus = await getCuti();
     return totalCuti - dateminus;
   }
-
-  // Future<Map<String, dynamic>> tes() {
-  //   Map<String, dynamic> halo = {'name': 'arlan'};
-  //   return halo;
-  // }
 }
