@@ -10,6 +10,7 @@ import 'package:pilar_presence_app/app/style/app_color.dart';
 import 'package:pilar_presence_app/constant.dart';
 import '../controllers/user_profile_controller.dart';
 import 'package:intl/intl.dart';
+import 'package:change_case/change_case.dart';
 
 class UserProfileView extends GetView<UserProfileController> {
   const UserProfileView({Key? key}) : super(key: key);
@@ -29,15 +30,332 @@ class UserProfileView extends GetView<UserProfileController> {
           String profileName = user["name"].toString().toLowerCase();
           final imageUrl = "https://ui-avatars.com/api/?name=$profileName";
           return Scaffold(
+            appBar: AppBar(
+              title: Text(
+                'Profile',
+                style: TextStyle(
+                  color: AppColor.secondary,
+                  fontSize: Constant.textSize(context: context, fontSize: 14),
+                ),
+              ),
+              actions: [
+                Padding(
+                  padding: const EdgeInsets.all(14),
+                  child: InkWell(
+                    onTap: () {
+                      showModalBottomSheet(
+                        context: context,
+                        builder: (context) => FractionallySizedBox(
+                          heightFactor: 0.7,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 20),
+                            child: Column(
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                    border: Border(
+                                      bottom: BorderSide(
+                                          width: 1,
+                                          color: AppColor.secondaryExtraSoft),
+                                    ),
+                                  ),
+                                  child: Material(
+                                    color: Colors.transparent,
+                                    child: InkWell(
+                                      onTap: () {
+                                        Navigator.pop(context);
+                                        Get.toNamed(Routes.USER_UPDATE_PROFILE,
+                                            arguments: user);
+                                      },
+                                      child: Container(
+                                        padding: const EdgeInsets.all(10),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                ClipOval(
+                                                  child: Container(
+                                                    color: secondaryColor,
+                                                    padding:
+                                                        const EdgeInsets.all(5),
+                                                    child: Icon(
+                                                      Ionicons.person_outline,
+                                                      color: primaryColor,
+                                                      size: 20,
+                                                    ),
+                                                  ),
+                                                ),
+                                                const SizedBox(width: 20),
+                                                Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      "Ubah Data Diri",
+                                                      style: TextStyle(
+                                                        color: Colors.black,
+                                                        fontSize:
+                                                            Constant.textSize(
+                                                                context:
+                                                                    context,
+                                                                fontSize: 16),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                            const Icon(
+                                              Ionicons.chevron_forward_outline,
+                                              size: 18,
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  decoration: BoxDecoration(
+                                    border: Border(
+                                      bottom: BorderSide(
+                                          width: 1,
+                                          color: AppColor.secondaryExtraSoft),
+                                    ),
+                                  ),
+                                  child: Material(
+                                    color: Colors.transparent,
+                                    child: InkWell(
+                                      onTap: () {
+                                        Navigator.pop(context);
+                                        Get.toNamed(Routes.USER_UPDATE_EMAIL);
+                                      },
+                                      child: Container(
+                                        padding: const EdgeInsets.all(10),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                ClipOval(
+                                                  child: Container(
+                                                    color: secondaryColor,
+                                                    padding:
+                                                        const EdgeInsets.all(5),
+                                                    child: Icon(
+                                                      Ionicons.mail_outline,
+                                                      color: primaryColor,
+                                                      size: 20,
+                                                    ),
+                                                  ),
+                                                ),
+                                                const SizedBox(width: 20),
+                                                Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      "Ubah Email",
+                                                      style: TextStyle(
+                                                        color: Colors.black,
+                                                        fontSize:
+                                                            Constant.textSize(
+                                                                context:
+                                                                    context,
+                                                                fontSize: 16),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                            const Icon(
+                                              Ionicons.chevron_forward_outline,
+                                              size: 18,
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  decoration: BoxDecoration(
+                                    border: Border(
+                                      bottom: BorderSide(
+                                          width: 1,
+                                          color: AppColor.secondaryExtraSoft),
+                                    ),
+                                  ),
+                                  child: Material(
+                                    color: Colors.transparent,
+                                    child: InkWell(
+                                      onTap: () {
+                                        Navigator.pop(context);
+                                        Get.toNamed(
+                                            Routes.USER_UPDATE_PASSWORD);
+                                      },
+                                      child: Container(
+                                        padding: const EdgeInsets.all(10),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                ClipOval(
+                                                  child: Container(
+                                                    color: secondaryColor,
+                                                    padding:
+                                                        const EdgeInsets.all(5),
+                                                    child: Icon(
+                                                      Ionicons.key_outline,
+                                                      color: primaryColor,
+                                                      size: 20,
+                                                    ),
+                                                  ),
+                                                ),
+                                                const SizedBox(width: 20),
+                                                Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      "Ubah Password",
+                                                      style: TextStyle(
+                                                        color: Colors.black,
+                                                        fontSize:
+                                                            Constant.textSize(
+                                                                context:
+                                                                    context,
+                                                                fontSize: 16),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                            const Icon(
+                                              Ionicons.chevron_forward_outline,
+                                              size: 18,
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  decoration: BoxDecoration(
+                                    border: Border(
+                                      bottom: BorderSide(
+                                          width: 1,
+                                          color: AppColor.secondaryExtraSoft),
+                                    ),
+                                  ),
+                                  child: Material(
+                                    color: Colors.transparent,
+                                    child: InkWell(
+                                      onTap: () => controller
+                                          .logout(controller.isLoading),
+                                      child: Container(
+                                        padding: const EdgeInsets.all(10),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                ClipOval(
+                                                  child: Container(
+                                                    color: secondaryColor,
+                                                    padding:
+                                                        const EdgeInsets.all(5),
+                                                    child: Icon(
+                                                      Ionicons.exit_outline,
+                                                      color: primaryColor,
+                                                      size: 20,
+                                                    ),
+                                                  ),
+                                                ),
+                                                const SizedBox(width: 20),
+                                                Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      "Logout",
+                                                      style: TextStyle(
+                                                        color: Colors.black,
+                                                        fontSize:
+                                                            Constant.textSize(
+                                                                context:
+                                                                    context,
+                                                                fontSize: 16),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                            const Icon(
+                                              Ionicons.chevron_forward_outline,
+                                              size: 18,
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                    child: const Icon(
+                      Ionicons.menu_outline,
+                      size: 22,
+                      color: Colors.black87,
+                    ),
+                  ),
+                ),
+              ],
+              backgroundColor: Colors.white,
+              elevation: 0,
+              centerTitle: true,
+              bottom: PreferredSize(
+                preferredSize: const Size.fromHeight(1),
+                child: Container(
+                  width: Get.width,
+                  height: 1,
+                  color: AppColor.secondaryExtraSoft,
+                ),
+              ),
+            ),
             backgroundColor: Colors.white,
             body: SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(vertical: 60, horizontal: 20),
+              physics: ScrollPhysics(),
+              padding: const EdgeInsets.only(top: 20),
               child: Column(
                 children: [
                   GestureDetector(
                     onTap: () => controller.pickImage(),
                     child: Stack(
+                      alignment: Alignment.center,
                       children: [
+                        ClipOval(
+                          child: Container(
+                            height: 110,
+                            width: 110,
+                            decoration:
+                                const BoxDecoration(color: Colors.white),
+                          ),
+                        ),
                         ClipOval(
                           child: SizedBox(
                             width: 100,
@@ -80,7 +398,7 @@ class UserProfileView extends GetView<UserProfileController> {
                   ),
                   const SizedBox(height: 10),
                   Text(
-                    "${toBeginningOfSentenceCase(profileName)}",
+                    "${profileName.toCapitalCase()}",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         fontSize:
@@ -91,292 +409,87 @@ class UserProfileView extends GetView<UserProfileController> {
                     "${user["email"].toString().toLowerCase()}",
                     textAlign: TextAlign.center,
                     style: TextStyle(
+                      color: AppColor.secondarySoft,
                       fontSize:
                           Constant.textSize(context: context, fontSize: 14),
                     ),
                   ),
                   const SizedBox(height: 20),
-                  if (user["role"] == "admin")
-                    Container(
-                      decoration: BoxDecoration(
-                        border: Border(
-                          bottom: BorderSide(
-                              width: 1, color: AppColor.secondaryExtraSoft),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Column(
+                      children: [
+                        profileData(
+                          context,
+                          "Email",
+                          "${user["email"].toString().toLowerCase()}",
                         ),
-                      ),
-                      child: Material(
-                        color: Colors.transparent,
-                        child: InkWell(
-                          onTap: () =>
-                              Get.toNamed(Routes.USER_ADD, arguments: user),
-                          child: Container(
-                            padding: const EdgeInsets.all(10),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Row(
-                                  children: [
-                                    ClipOval(
-                                      child: Container(
-                                        color: secondaryColor,
-                                        padding: const EdgeInsets.all(5),
-                                        child: Icon(
-                                          Ionicons.person_add_outline,
-                                          color: primaryColor,
-                                          size: 20,
-                                        ),
-                                      ),
-                                    ),
-                                    const SizedBox(width: 20),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "Tambah User",
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: Constant.textSize(
-                                                context: context, fontSize: 16),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                                const Icon(
-                                  Ionicons.chevron_forward_outline,
-                                  size: 18,
-                                )
-                              ],
-                            ),
-                          ),
+                        profileData(
+                          context,
+                          "Nomor Telp",
+                          "${user["phone_number"] != null ? user["phone_number"] : '-'}",
                         ),
-                      ),
-                    ),
-                  Container(
-                    decoration: BoxDecoration(
-                      border: Border(
-                        bottom: BorderSide(
-                            width: 1, color: AppColor.secondaryExtraSoft),
-                      ),
-                    ),
-                    child: Material(
-                      color: Colors.transparent,
-                      child: InkWell(
-                        onTap: () => Get.toNamed(Routes.USER_UPDATE_PROFILE,
-                            arguments: user),
-                        child: Container(
-                          padding: const EdgeInsets.all(10),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                children: [
-                                  ClipOval(
-                                    child: Container(
-                                      color: secondaryColor,
-                                      padding: const EdgeInsets.all(5),
-                                      child: Icon(
-                                        Ionicons.person_outline,
-                                        color: primaryColor,
-                                        size: 20,
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(width: 20),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "Ubah Profil",
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: Constant.textSize(
-                                              context: context, fontSize: 16),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              const Icon(
-                                Ionicons.chevron_forward_outline,
-                                size: 18,
-                              )
-                            ],
-                          ),
+                        profileData(
+                            context,
+                            "Tempat/Tgl Lahir",
+                            user["profile"]?["birth_place"] != null &&
+                                    user["profile"]?["birth_date"] != null
+                                ? "${user["profile"]["birth_place"]}, ${DateFormat('dd-MM-yyyy').format(DateTime.parse(user["profile"]["birth_date"].replaceAll("/", "-")))}"
+                                : '-'),
+                        profileData(
+                          context,
+                          "Jenis Kelamin",
+                          "${user["profile"]?["gender"] != null ? user["profile"]["gender"] : '-'}",
                         ),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                      border: Border(
-                        bottom: BorderSide(
-                            width: 1, color: AppColor.secondaryExtraSoft),
-                      ),
-                    ),
-                    child: Material(
-                      color: Colors.transparent,
-                      child: InkWell(
-                        onTap: () => Get.toNamed(Routes.USER_UPDATE_EMAIL),
-                        child: Container(
-                          padding: const EdgeInsets.all(10),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                children: [
-                                  ClipOval(
-                                    child: Container(
-                                      color: secondaryColor,
-                                      padding: const EdgeInsets.all(5),
-                                      child: Icon(
-                                        Ionicons.mail_outline,
-                                        color: primaryColor,
-                                        size: 20,
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(width: 20),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "Ubah Email",
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: Constant.textSize(
-                                              context: context, fontSize: 16),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              const Icon(
-                                Ionicons.chevron_forward_outline,
-                                size: 18,
-                              )
-                            ],
-                          ),
+                        profileData(
+                          context,
+                          "Golongan Darah",
+                          "${user["profile"]?["goldar"] != null ? user["profile"]["goldar"] : '-'}",
                         ),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                      border: Border(
-                        bottom: BorderSide(
-                            width: 1, color: AppColor.secondaryExtraSoft),
-                      ),
-                    ),
-                    child: Material(
-                      color: Colors.transparent,
-                      child: InkWell(
-                        onTap: () => Get.toNamed(Routes.USER_UPDATE_PASSWORD),
-                        child: Container(
-                          padding: const EdgeInsets.all(10),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                children: [
-                                  ClipOval(
-                                    child: Container(
-                                      color: secondaryColor,
-                                      padding: const EdgeInsets.all(5),
-                                      child: Icon(
-                                        Ionicons.key_outline,
-                                        color: primaryColor,
-                                        size: 20,
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(width: 20),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "Ubah Password",
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: Constant.textSize(
-                                              context: context, fontSize: 16),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              const Icon(
-                                Ionicons.chevron_forward_outline,
-                                size: 18,
-                              )
-                            ],
-                          ),
+                        profileData(
+                          context,
+                          "Alamat",
+                          "${user["profile"]?["address"] != null ? user["profile"]["address"] : '-'}",
                         ),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                      border: Border(
-                        bottom: BorderSide(
-                            width: 1, color: AppColor.secondaryExtraSoft),
-                      ),
-                    ),
-                    child: Material(
-                      color: Colors.transparent,
-                      child: InkWell(
-                        onTap: () => controller.logout(controller.isLoading),
-                        child: Container(
-                          padding: const EdgeInsets.all(10),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                children: [
-                                  ClipOval(
-                                    child: Container(
-                                      color: secondaryColor,
-                                      padding: const EdgeInsets.all(5),
-                                      child: Icon(
-                                        Ionicons.exit_outline,
-                                        color: primaryColor,
-                                        size: 20,
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(width: 20),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "Logout",
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: Constant.textSize(
-                                              context: context, fontSize: 16),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              const Icon(
-                                Ionicons.chevron_forward_outline,
-                                size: 18,
-                              )
-                            ],
-                          ),
+                        profileData(
+                          context,
+                          "RT/RW",
+                          user["profile"]?["rt"] != null &&
+                                  user["profile"]?["rw"] != null
+                              ? "${user["profile"]["rt"]} / ${user["profile"]["rw"]}"
+                              : "-",
                         ),
-                      ),
+                        profileData(
+                          context,
+                          "Kel/Desa",
+                          "${user["profile"]?["kelurahan"] != null ? user["profile"]["kelurahan"] : '-'}",
+                        ),
+                        profileData(
+                          context,
+                          "Kecamatan",
+                          "${user["profile"]?["kecamatan"] != null ? user["profile"]["kecamatan"] : '-'}",
+                        ),
+                        profileData(
+                          context,
+                          "Agama",
+                          "${user["profile"]?["agama"] != null ? user["profile"]["agama"] : '-'}",
+                        ),
+                        profileData(
+                          context,
+                          "Status Perkawinan",
+                          "${user["profile"]?["status_kawin"] != null ? user["profile"]["status_kawin"] : '-'}",
+                        ),
+                        profileData(
+                          context,
+                          "Pekerjaan",
+                          "${user["profile"]?["pekerjaan"] != null ? user["profile"]["pekerjaan"] : '-'}",
+                        ),
+                        profileData(
+                          context,
+                          "Kewarganegaraan",
+                          "${user["profile"]?["kewarganegaraan"] != null ? user["profile"]["kewarganegaraan"] : '-'}",
+                        ),
+                      ],
                     ),
                   ),
                 ],
@@ -391,6 +504,42 @@ class UserProfileView extends GetView<UserProfileController> {
           );
         }
       },
+    );
+  }
+
+  Widget profileData(BuildContext context, String title, String titleData) {
+    return Container(
+      decoration: BoxDecoration(
+        border: Border(
+          bottom: BorderSide(width: 1, color: AppColor.secondaryExtraSoft),
+        ),
+      ),
+      child: Container(
+        width: Get.width,
+        padding: const EdgeInsets.all(10),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "$title",
+              softWrap: true,
+              style: TextStyle(
+                color: AppColor.secondarySoft,
+                fontSize: Constant.textSize(context: context, fontSize: 12),
+              ),
+            ),
+            const SizedBox(width: 20),
+            Text(
+              "$titleData",
+              softWrap: true,
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: Constant.textSize(context: context, fontSize: 14),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

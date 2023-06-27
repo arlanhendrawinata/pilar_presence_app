@@ -1,3 +1,4 @@
+import 'package:change_case/change_case.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -374,157 +375,186 @@ class PerizinanCutiView extends GetView<PerizinanCutiController> {
                       snapshot.data?.docs.length != 0) {
                     List<QueryDocumentSnapshot<Map<String, dynamic>>>
                         allDatePerizinanLembur = snapshot.data!.docs;
-                    return ListView.builder(
-                      padding: const EdgeInsets.symmetric(vertical: 0),
-                      shrinkWrap: true,
-                      itemCount: allDatePerizinanLembur.length,
-                      itemBuilder: ((context, index) {
-                        Map<String, dynamic> data =
-                            allDatePerizinanLembur[index].data();
-                        return Container(
-                          margin: const EdgeInsets.only(bottom: 20),
-                          padding: const EdgeInsets.all(20),
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                                width: 1.5, color: AppColor.secondaryExtraSoft),
-                            borderRadius: BorderRadius.circular(10),
-                            color: Colors.white,
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    DateFormat('EEEE, MMM d, ' 'yyyy')
-                                        .format(DateTime.parse(data['date'])),
-                                    style: TextStyle(
-                                      color: Colors.black87,
-                                      fontSize: Constant.textSize(
-                                          context: context, fontSize: 14),
-                                    ),
-                                  ),
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(5),
-                                      color: (data['status'] == "pending")
-                                          ? AppColor.warningSoft
-                                          : (data['status'] == "approved")
-                                              ? AppColor.successSoft
-                                              : AppColor.errorSoft,
-                                    ),
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 5, horizontal: 5),
-                                    child: Text(
-                                      "${data['status']}",
-                                      style: TextStyle(
-                                        color: (data['status'] == "pending")
-                                            ? AppColor.warning
-                                            : (data['status'] == "approved")
-                                                ? AppColor.success
-                                                : AppColor.error,
-                                        fontSize: Constant.textSize(
-                                            context: context, fontSize: 13),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 12),
-                              Container(
-                                decoration: BoxDecoration(
-                                    boxShadow: const [
-                                      BoxShadow(
-                                        offset: Offset(0, 0),
-                                        spreadRadius: 0,
-                                        blurRadius: 8,
-                                        color: Color.fromRGBO(0, 0, 0, 0.06),
-                                      )
-                                    ],
-                                    borderRadius: BorderRadius.circular(10),
-                                    color: Colors.white),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(20),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Column(
-                                        children: [
-                                          Text(
-                                            "Mulai",
-                                            style: TextStyle(
-                                              color: Colors.black87,
-                                              fontSize: Constant.textSize(
-                                                  context: context,
-                                                  fontSize: 14),
-                                            ),
-                                          ),
-                                          const SizedBox(
-                                            height: 5,
-                                          ),
-                                          Text(
-                                            DateFormat.yMd()
-                                                .format(DateTime.parse(
-                                                    data['cuti_start']))
-                                                .replaceAll("/", "-"),
-                                            style: TextStyle(
-                                              color: Colors.black87,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: Constant.textSize(
-                                                  context: context,
-                                                  fontSize: 14),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      Container(
-                                        width: 2,
-                                        height: 40,
-                                        color:
-                                            const Color.fromARGB(15, 0, 0, 0),
-                                      ),
-                                      Column(
-                                        children: [
-                                          Text(
-                                            "Selesai",
-                                            style: TextStyle(
-                                              color: Colors.black87,
-                                              fontSize: Constant.textSize(
-                                                  context: context,
-                                                  fontSize: 14),
-                                            ),
-                                          ),
-                                          const SizedBox(
-                                            height: 5,
-                                          ),
-                                          Text(
-                                            DateFormat.yMd()
-                                                .format(DateTime.parse(
-                                                    data['cuti_end']))
-                                                .replaceAll("/", "-"),
-                                            style: TextStyle(
-                                              color: Colors.black87,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: Constant.textSize(
-                                                  context: context,
-                                                  fontSize: 14),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
+                    return SizedBox(
+                      height: Get.height * 0.5,
+                      child: ListView.builder(
+                        padding: const EdgeInsets.symmetric(vertical: 0),
+                        shrinkWrap: true,
+                        itemCount: allDatePerizinanLembur.length,
+                        itemBuilder: ((context, index) {
+                          Map<String, dynamic> data =
+                              allDatePerizinanLembur[index].data();
+                          return Card(
+                            shape: RoundedRectangleBorder(
+                              side: BorderSide(
+                                  width: 1, color: AppColor.secondaryExtraSoft),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            elevation: 0,
+                            margin: index != allDatePerizinanLembur.length - 1
+                                ? const EdgeInsets.only(bottom: 10)
+                                : const EdgeInsets.only(bottom: 0),
+                            child: ExpansionTile(
+                              leading: (data['status'] == 'pending')
+                                  ? Icon(
+                                      Ionicons.alarm,
+                                      color: AppColor.warning,
+                                    )
+                                  : (data['status'] == 'rejected')
+                                      ? Icon(
+                                          Ionicons.close_circle_outline,
+                                          color: AppColor.error,
+                                        )
+                                      : Icon(
+                                          Ionicons.checkmark_circle_outline,
+                                          color: AppColor.success,
+                                        ),
+                              shape: Border.all(width: 0, color: Colors.white),
+                              title: Text(
+                                DateFormat('EEEE, MMM d, ' 'yyyy')
+                                    .format(DateTime.parse(data['date'])),
+                                style: TextStyle(
+                                  color: Colors.black87,
+                                  fontSize: Constant.textSize(
+                                      context: context, fontSize: 14),
                                 ),
                               ),
-                            ],
-                          ),
-                        );
-                      }),
+                              children: [
+                                SizedBox(
+                                  width: Get.width,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        bottom: 20, left: 16, right: 16),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          height: 1,
+                                          width: Get.width,
+                                          decoration: BoxDecoration(
+                                            color: AppColor.secondaryExtraSoft,
+                                          ),
+                                        ),
+                                        SizedBox(height: 10),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              "Keterangan",
+                                              style: TextStyle(
+                                                color: Colors.black87,
+                                                fontSize: Constant.textSize(
+                                                    context: context,
+                                                    fontSize: 12),
+                                              ),
+                                            ),
+                                            Text(
+                                              "${data['detail']}"
+                                                  .toUpperFirstCase(),
+                                              style: TextStyle(
+                                                color: AppColor.secondarySoft,
+                                                fontSize: Constant.textSize(
+                                                    context: context,
+                                                    fontSize: 14),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        SizedBox(height: 10),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              "Mulai",
+                                              style: TextStyle(
+                                                color: Colors.black87,
+                                                fontSize: Constant.textSize(
+                                                    context: context,
+                                                    fontSize: 12),
+                                              ),
+                                            ),
+                                            Text(
+                                              DateFormat.yMd()
+                                                  .format(DateTime.parse(
+                                                      data['cuti_start']))
+                                                  .replaceAll("/", "-"),
+                                              style: TextStyle(
+                                                color: AppColor.secondarySoft,
+                                                fontSize: Constant.textSize(
+                                                    context: context,
+                                                    fontSize: 14),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        SizedBox(height: 10),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              "Selesai",
+                                              style: TextStyle(
+                                                color: Colors.black87,
+                                                fontSize: Constant.textSize(
+                                                    context: context,
+                                                    fontSize: 12),
+                                              ),
+                                            ),
+                                            Text(
+                                              DateFormat.yMd()
+                                                  .format(DateTime.parse(
+                                                      data['cuti_end']))
+                                                  .replaceAll("/", "-"),
+                                              style: TextStyle(
+                                                color: AppColor.secondarySoft,
+                                                fontSize: Constant.textSize(
+                                                    context: context,
+                                                    fontSize: 14),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        SizedBox(height: 10),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              "Status",
+                                              style: TextStyle(
+                                                color: Colors.black87,
+                                                fontSize: Constant.textSize(
+                                                    context: context,
+                                                    fontSize: 12),
+                                              ),
+                                            ),
+                                            Text(
+                                              "${data['status']}"
+                                                  .toUpperFirstCase(),
+                                              style: TextStyle(
+                                                color: AppColor.secondarySoft,
+                                                fontSize: Constant.textSize(
+                                                    context: context,
+                                                    fontSize: 14),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        }),
+                      ),
                     );
                   } else {
                     return Container(

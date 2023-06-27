@@ -113,8 +113,12 @@ class AdminMenuView extends GetView<AdminMenuController> {
                               future: controller.getData(),
                               builder: (context, snapshot) {
                                 if (snapshot.hasData) {
+                                  String countPerizinanRequest = snapshot
+                                      .data!.length
+                                      .toString()
+                                      .padLeft(2, '0');
                                   return Text(
-                                    "${snapshot.data!.length}",
+                                    countPerizinanRequest,
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       color: Colors.white60,
@@ -143,7 +147,7 @@ class AdminMenuView extends GetView<AdminMenuController> {
                 ),
               ),
               //* End Total Permintaan
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -152,7 +156,7 @@ class AdminMenuView extends GetView<AdminMenuController> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         InkWell(
-                          onTap: () {},
+                          onTap: () => Get.toNamed(Routes.MONITORING),
                           child: Container(
                             width: Get.width * 0.45,
                             padding: const EdgeInsets.all(20),
@@ -207,22 +211,50 @@ class AdminMenuView extends GetView<AdminMenuController> {
                                     ),
                                   ],
                                 ),
-                                SizedBox(height: 20),
+                                const SizedBox(height: 20),
                                 Padding(
                                   padding: const EdgeInsets.only(left: 8),
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Text(
-                                        "00",
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white60,
-                                          fontSize: Constant.textSize(
-                                              context: context, fontSize: 26),
-                                        ),
-                                      ),
+                                      GetBuilder<AdminMenuController>(
+                                          builder: (c) => FutureBuilder<int>(
+                                              future:
+                                                  controller.employeePresence(),
+                                              builder: (context, snapshot) {
+                                                String countPresence = snapshot
+                                                    .data
+                                                    .toString()
+                                                    .padLeft(2, '0');
+                                                if (snapshot.hasData) {
+                                                  return Text(
+                                                    countPresence,
+                                                    style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.white60,
+                                                      fontSize:
+                                                          Constant.textSize(
+                                                              context: context,
+                                                              fontSize: 26),
+                                                    ),
+                                                  );
+                                                } else {
+                                                  return Text(
+                                                    "00",
+                                                    style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.white60,
+                                                      fontSize:
+                                                          Constant.textSize(
+                                                              context: context,
+                                                              fontSize: 26),
+                                                    ),
+                                                  );
+                                                }
+                                              })),
                                       Text(
                                         "Karyawan Hadir",
                                         style: TextStyle(
@@ -238,42 +270,45 @@ class AdminMenuView extends GetView<AdminMenuController> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 10),
-                        Container(
-                          width: Get.width * 0.45,
-                          padding: const EdgeInsets.all(20),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            image: const DecorationImage(
-                              image: AssetImage('assets/gradient_line_2.jpg'),
-                              fit: BoxFit.cover,
+                        const SizedBox(height: 10),
+                        InkWell(
+                          onTap: () => Get.toNamed(Routes.REPORT),
+                          child: Container(
+                            width: Get.width * 0.45,
+                            padding: const EdgeInsets.all(20),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              image: const DecorationImage(
+                                image: AssetImage('assets/gradient_line_2.jpg'),
+                                fit: BoxFit.cover,
+                              ),
                             ),
-                          ),
-                          child: Row(
-                            children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                    color: const Color.fromARGB(
-                                        200, 255, 255, 255),
-                                    borderRadius: BorderRadius.circular(10)),
-                                padding: const EdgeInsets.all(10),
-                                child: Icon(
-                                  Ionicons.stats_chart_outline,
-                                  color: primaryColor,
-                                  size: 20,
+                            child: Row(
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                      color: const Color.fromARGB(
+                                          200, 255, 255, 255),
+                                      borderRadius: BorderRadius.circular(10)),
+                                  padding: const EdgeInsets.all(10),
+                                  child: Icon(
+                                    Ionicons.stats_chart_outline,
+                                    color: primaryColor,
+                                    size: 20,
+                                  ),
                                 ),
-                              ),
-                              const SizedBox(width: 8),
-                              Text(
-                                "Laporan",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: Constant.textSize(
-                                      context: context, fontSize: 14),
+                                const SizedBox(width: 8),
+                                Text(
+                                  "Laporan",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: Constant.textSize(
+                                        context: context, fontSize: 14),
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       ],
@@ -336,88 +371,112 @@ class AdminMenuView extends GetView<AdminMenuController> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 10),
-                        Container(
-                          width: Get.width * 0.45,
-                          padding: const EdgeInsets.all(20),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            image: const DecorationImage(
-                              image: AssetImage('assets/gradient_line_2.jpg'),
-                              fit: BoxFit.cover,
+                        const SizedBox(height: 10),
+                        InkWell(
+                          onTap: () => Get.toNamed(Routes.MANAGEMENT_USER),
+                          child: Container(
+                            width: Get.width * 0.45,
+                            padding: const EdgeInsets.all(20),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              image: const DecorationImage(
+                                image: AssetImage('assets/gradient_line_2.jpg'),
+                                fit: BoxFit.cover,
+                              ),
                             ),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                children: [
-                                  Container(
-                                    decoration: BoxDecoration(
-                                        color: const Color.fromARGB(
-                                            200, 255, 255, 255),
-                                        borderRadius:
-                                            BorderRadius.circular(10)),
-                                    padding: const EdgeInsets.all(10),
-                                    child: Icon(
-                                      Ionicons.person_outline,
-                                      color: primaryColor,
-                                      size: 20,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    Container(
+                                      decoration: BoxDecoration(
+                                          color: const Color.fromARGB(
+                                              200, 255, 255, 255),
+                                          borderRadius:
+                                              BorderRadius.circular(10)),
+                                      padding: const EdgeInsets.all(10),
+                                      child: Icon(
+                                        Ionicons.person_outline,
+                                        color: primaryColor,
+                                        size: 20,
+                                      ),
                                     ),
-                                  ),
-                                  const SizedBox(width: 10),
-                                  Column(
+                                    const SizedBox(width: 10),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "Manajemen",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: Constant.textSize(
+                                                context: context, fontSize: 14),
+                                          ),
+                                        ),
+                                        Text(
+                                          "Pengguna",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: Constant.textSize(
+                                                context: context, fontSize: 16),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 20),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 8),
+                                  child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
+                                      FutureBuilder(
+                                          future: controller.getActiveUser(),
+                                          builder: (context, snapshot) {
+                                            if (snapshot.data != null) {
+                                              return Text(
+                                                snapshot.data!.length
+                                                    .toString()
+                                                    .padLeft(2, '0'),
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.white60,
+                                                  fontSize: Constant.textSize(
+                                                      context: context,
+                                                      fontSize: 26),
+                                                ),
+                                              );
+                                            } else {
+                                              return Text(
+                                                "00",
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.white60,
+                                                  fontSize: Constant.textSize(
+                                                      context: context,
+                                                      fontSize: 26),
+                                                ),
+                                              );
+                                            }
+                                          }),
                                       Text(
-                                        "Manajemen",
+                                        "Pengguna Aktif",
                                         style: TextStyle(
                                           color: Colors.white,
                                           fontSize: Constant.textSize(
-                                              context: context, fontSize: 14),
-                                        ),
-                                      ),
-                                      Text(
-                                        "Pengguna",
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: Constant.textSize(
-                                              context: context, fontSize: 16),
+                                              context: context, fontSize: 12),
                                         ),
                                       ),
                                     ],
                                   ),
-                                ],
-                              ),
-                              SizedBox(height: 20),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 8),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "00",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white60,
-                                        fontSize: Constant.textSize(
-                                            context: context, fontSize: 26),
-                                      ),
-                                    ),
-                                    Text(
-                                      "Pengguna Aktif",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: Constant.textSize(
-                                            context: context, fontSize: 12),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              )
-                            ],
+                                )
+                              ],
+                            ),
                           ),
                         ),
                       ],
@@ -425,9 +484,9 @@ class AdminMenuView extends GetView<AdminMenuController> {
                   )
                 ],
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               InkWell(
-                onTap: () => Get.toNamed(Routes.PERIZINAN_REQUEST),
+                onTap: () => Get.toNamed(Routes.MANAGEMENT_ANNOUNCEMENT),
                 child: Container(
                   width: Get.width,
                   padding: const EdgeInsets.all(20),
@@ -485,15 +544,24 @@ class AdminMenuView extends GetView<AdminMenuController> {
                               ),
                             ],
                           ),
-                          Text(
-                            "00",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white60,
-                              fontSize: Constant.textSize(
-                                  context: context, fontSize: 26),
-                            ),
-                          ),
+                          FutureBuilder(
+                              future: controller.countAnnouncement(),
+                              builder: (context, snapshot) {
+                                if (snapshot.data != null) {
+                                  int count = snapshot.data!.count;
+                                  return Text(
+                                    count.toString().padLeft(2, '0'),
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white60,
+                                      fontSize: Constant.textSize(
+                                          context: context, fontSize: 26),
+                                    ),
+                                  );
+                                } else {
+                                  return const SizedBox();
+                                }
+                              }),
                         ],
                       ),
                     ],

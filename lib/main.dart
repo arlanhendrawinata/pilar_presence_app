@@ -51,10 +51,10 @@ void main() async {
   });
 
   // device orientations
-  // SystemChrome.setPreferredOrientations([
-  //   DeviceOrientation.portraitUp,
-  //   DeviceOrientation.portraitDown,
-  // ]);
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
 
   // bindings
   Get.put(PageIndexController(), permanent: true);
@@ -83,15 +83,15 @@ void main() async {
                   ),
                 ),
                 home: Scaffold(
-                  body: Center(
-                    child: CircularProgressIndicator(
-                      color: primaryColor,
-                    ),
-                  ),
+                  body: Center(child: Text("loading...")),
                 ));
           }
           // print("Main.dart : ${snapshot.data}");
           return GetMaterialApp(
+            builder: (context, child) => MediaQuery(
+                data: MediaQuery.of(context)
+                    .copyWith(alwaysUse24HourFormat: true),
+                child: child!),
             theme: ThemeData(
               scaffoldBackgroundColor: Colors.white,
               primarySwatch: Colors.red,

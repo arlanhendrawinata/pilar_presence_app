@@ -182,6 +182,7 @@ class PresenceController extends GetxController {
             isLoading: isLoading,
             onConfirm: () async {
               await collectionPresence.doc(formattedCurrentDate).set({
+                "uid": uid,
                 "status": "Kantor",
                 "date": _currentDate.toIso8601String(),
                 "checkIn": {
@@ -251,6 +252,7 @@ class PresenceController extends GetxController {
               isLoading: isLoading,
               onConfirm: () async {
                 await collectionPresence.doc(formattedCurrentDate).set({
+                  "uid": uid,
                   "status": "Kantor",
                   "date": _currentDate.toIso8601String(),
                   "checkIn": {

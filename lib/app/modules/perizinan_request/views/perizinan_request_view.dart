@@ -1,3 +1,4 @@
+import 'package:change_case/change_case.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -258,7 +259,7 @@ class PerizinanRequestView extends GetView<PerizinanRequestController> {
                           Row(
                             children: [
                               Text(
-                                "${snapshot[index]['name']}",
+                                "${snapshot[index]['name']}".toCapitalCase(),
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: Constant.textSize(

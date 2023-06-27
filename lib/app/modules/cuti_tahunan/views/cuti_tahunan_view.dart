@@ -7,6 +7,7 @@ import 'package:ionicons/ionicons.dart';
 import 'package:pilar_presence_app/app/routes/app_pages.dart';
 import 'package:pilar_presence_app/app/style/app_color.dart';
 import 'package:pilar_presence_app/app/widgets/custom_alert_dialog.dart';
+import 'package:pilar_presence_app/app/widgets/custom_input.dart';
 import 'package:pilar_presence_app/constant.dart';
 
 import '../controllers/cuti_tahunan_controller.dart';
@@ -39,9 +40,15 @@ class CutiTahunanView extends GetView<CutiTahunanController> {
             padding: const EdgeInsets.all(14),
             child: InkWell(
               onTap: () => showDialog(
-                context: context,
+                context: Get.context!,
                 builder: (context) => AlertDialog(
-                  title: Text("Select year"),
+                  title: Text(
+                    "Pilih Tahun",
+                    style: TextStyle(
+                      fontSize:
+                          Constant.textSize(context: context, fontSize: 14),
+                    ),
+                  ),
                   content: SizedBox(
                     height: 300,
                     width: 300,
@@ -52,6 +59,26 @@ class CutiTahunanView extends GetView<CutiTahunanController> {
                         onChanged: (date) {
                           controller.selectedDate = date;
                           Get.back();
+                          CustomAlertDialog.showDialog3(
+                              title: "Tambah Cuti Tahunan",
+                              message: "Tentukan jumlah cuti tahunan.",
+                              context: context,
+                              content: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  CustomInput(
+                                      controller: controller.amountCuti,
+                                      label: "Jumlah Cuti",
+                                      hint: "12",
+                                      keyboardType: TextInputType.number,
+                                      context: context),
+                                  const SizedBox(height: 16),
+                                ],
+                              ),
+                              onConfirm: () {
+                                controller.addCutiTahunan();
+                              },
+                              onCancel: () => Get.back());
                         }),
                   ),
                 ),
@@ -93,6 +120,7 @@ class CutiTahunanView extends GetView<CutiTahunanController> {
                     ? listCutiTahunan?.length
                     : 0,
                 itemBuilder: (context, index) {
+                  Map<String, dynamic>? data = listCutiTahunan?[index].data();
                   return Container(
                     margin: const EdgeInsets.only(bottom: 20),
                     decoration: BoxDecoration(
@@ -112,65 +140,63 @@ class CutiTahunanView extends GetView<CutiTahunanController> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Row(
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Column(
-                                    children: [
-                                      Text(
-                                        "Masuk",
-                                        style: TextStyle(
-                                          color: Colors.black87,
-                                          fontSize: Constant.textSize(
-                                              context: context, fontSize: 14),
-                                        ),
-                                      ),
-                                      const SizedBox(height: 5),
-                                      Text(
-                                        "-",
-                                        style: TextStyle(
-                                          color: Colors.black87,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: Constant.textSize(
-                                              context: context, fontSize: 14),
-                                        ),
-                                      ),
-                                    ],
+                                  Text(
+                                    'Cuti Tahun',
+                                    style: TextStyle(
+                                      color: AppColor.secondary,
+                                      fontSize: Constant.textSize(
+                                          context: context, fontSize: 12),
+                                    ),
                                   ),
-                                  const SizedBox(width: 24),
-                                  Column(
-                                    children: [
-                                      Text(
-                                        "Keluar",
-                                        style: TextStyle(
-                                          color: Colors.black87,
-                                          fontSize: Constant.textSize(
-                                              context: context, fontSize: 14),
-                                        ),
-                                      ),
-                                      const SizedBox(height: 5),
-                                      Text(
-                                        "-",
-                                        style: TextStyle(
-                                          color: Colors.black87,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: Constant.textSize(
-                                              context: context, fontSize: 14),
-                                        ),
-                                      ),
-                                    ],
+                                  Text(
+                                    "${data?['year'] ?? 'null'}",
+                                    style: TextStyle(
+                                      color: AppColor.secondary,
+                                      fontSize: Constant.textSize(
+                                          context: context, fontSize: 16),
+                                    ),
                                   ),
                                 ],
                               ),
-                              Expanded(
-                                child: Text(
-                                  "-",
-                                  textAlign: TextAlign.end,
-                                  style: TextStyle(
-                                    fontSize: Constant.textSize(
-                                        context: context, fontSize: 12),
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 20, vertical: 10),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  image: const DecorationImage(
+                                    image: AssetImage(
+                                        'assets/gradient_line_2.jpg'),
+                                    fit: BoxFit.cover,
                                   ),
                                 ),
-                              )
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "${data?['amount'] ?? 'null'}",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: Constant.textSize(
+                                            context: context, fontSize: 18),
+                                      ),
+                                    ),
+                                    SizedBox(width: 4),
+                                    Text(
+                                      "hari",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: Constant.textSize(
+                                            context: context, fontSize: 12),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ],
                           ),
                         ),

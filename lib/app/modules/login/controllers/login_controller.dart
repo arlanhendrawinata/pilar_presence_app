@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:pilar_presence_app/app/routes/app_pages.dart';
 import 'package:pilar_presence_app/app/widgets/custom_toast.dart';
 import 'package:pilar_presence_app/app/widgets/custom_alert_dialog.dart';
+import 'package:sizer/sizer.dart';
 
 class LoginController extends GetxController {
   TextEditingController emailC = TextEditingController();
@@ -214,10 +215,10 @@ class LoginController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.landscapeRight,
-      DeviceOrientation.landscapeLeft,
-    ]);
+    // SystemChrome.setPreferredOrientations([
+    //   DeviceOrientation.landscapeRight,
+    //   DeviceOrientation.landscapeLeft,
+    // ]);
   }
 
   @override

@@ -44,7 +44,8 @@ class _CustomTextAreaState extends State<CustomTextArea> {
           borderRadius: BorderRadius.circular(8),
           border: Border.all(width: 1, color: AppColor.secondaryExtraSoft),
         ),
-        child: TextField(
+        child: TextFormField(
+          keyboardType: TextInputType.multiline,
           readOnly: widget.disabled,
           obscureText: widget.obsecureText,
           cursorHeight: 20,

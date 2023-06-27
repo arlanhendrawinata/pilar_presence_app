@@ -783,6 +783,65 @@ class CustomAlertDialog {
     );
   }
 
+  static showDialogWithoutConfirm({
+    required String title,
+    required String message,
+    required BuildContext context,
+    required void Function() onCancel,
+  }) {
+    Get.defaultDialog(
+      title: "",
+      barrierDismissible: false,
+      contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 0),
+      radius: 8,
+      titlePadding: EdgeInsets.zero,
+      titleStyle: const TextStyle(fontSize: 0),
+      content: Column(
+        children: [
+          Container(
+            margin: const EdgeInsets.only(bottom: 32, top: 24),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: TextStyle(
+                    fontSize: Constant.textSize(context: context, fontSize: 16),
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  message,
+                  style: TextStyle(
+                    color: BlackSoftColor,
+                    fontSize: Constant.textSize(context: context, fontSize: 14),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            width: Get.width,
+            margin: const EdgeInsets.only(bottom: 16),
+            child: ElevatedButton(
+              onPressed: onCancel,
+              style: ElevatedButton.styleFrom(
+                padding: const EdgeInsets.symmetric(vertical: 12),
+                backgroundColor: Colors.black12,
+                elevation: 0,
+              ),
+              child: const Text(
+                "tutup",
+                style: TextStyle(color: Colors.black87),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   static showPhoto({
     String? photoURL,
     required BuildContext context,
@@ -1112,6 +1171,91 @@ class CustomAlertDialog {
                     ),
             ),
           )
+        ],
+      ),
+    );
+  }
+
+  static showDialog3({
+    required String title,
+    required String message,
+    required BuildContext context,
+    required Widget content,
+    String? onConfirmText,
+    required void Function() onConfirm,
+    required void Function() onCancel,
+  }) {
+    Get.defaultDialog(
+      title: "",
+      barrierDismissible: false,
+      contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 0),
+      radius: 8,
+      titlePadding: EdgeInsets.zero,
+      titleStyle: const TextStyle(fontSize: 0),
+      content: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            margin: const EdgeInsets.only(bottom: 32, top: 24),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: TextStyle(
+                    fontSize: Constant.textSize(context: context, fontSize: 16),
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  message,
+                  style: TextStyle(
+                    color: BlackSoftColor,
+                    fontSize: Constant.textSize(context: context, fontSize: 14),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          //*========== WIDGET ==========*//
+          content,
+          //*========== END WIDGET ==========*//
+          Container(
+            margin: const EdgeInsets.only(bottom: 16),
+            child: Row(
+              children: [
+                Expanded(
+                  flex: 6,
+                  child: ElevatedButton(
+                    onPressed: onCancel,
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                      backgroundColor: Colors.black12,
+                      elevation: 0,
+                    ),
+                    child: const Text(
+                      "batal",
+                      style: TextStyle(color: Colors.black87),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 16),
+                Expanded(
+                  flex: 6,
+                  child: ElevatedButton(
+                    onPressed: onConfirm,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: successColor,
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                      elevation: 0,
+                    ),
+                    child: Text(onConfirmText ?? 'konfirmasi'),
+                  ),
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );

@@ -26,14 +26,19 @@ class PresenceRemoteController extends GetxController {
   DateTime currentDate = DateTime.now();
 
   void pickImage() async {
-    photo =
-        await picker.pickImage(source: ImageSource.camera, imageQuality: 50);
-    if (photo != null) {
-      // print(image.value.path);
-      image.value = File(photo!.path);
-      // print("image value: ${image.value.path}");
-    } else {
-      print("null");
+    try {
+      photo =
+          await picker.pickImage(source: ImageSource.camera, imageQuality: 50);
+      if (photo != null) {
+        // print(image.value.path);
+        image.value = File(photo!.path);
+        // print("image value: ${image.value.path}");
+      } else {
+        print("null");
+      }
+    } catch (e) {
+      CustomToast.dangerToast(
+          "Terjadi Kesalahan", "Silahkan mengulang lagi.", Get.context!);
     }
   }
 
@@ -151,12 +156,12 @@ class PresenceRemoteController extends GetxController {
             .putFile(newFileImage);
 
         await collectionPresence.doc(formattedCurrentDate).set({
+          "uid": uid,
           "status": "Dinas Luar",
           "date": _currentDate.toIso8601String(),
           "checkIn": {
             "photoURL": await getImageURL(uid, formattedDatePresence,
-                    formattedCurrentDate, imgExt, "checkIn")
-                .toString(),
+                formattedCurrentDate, imgExt, "checkIn"),
             "date": _currentDate.toIso8601String(),
             "lat": position.latitude,
             "lng": position.longitude,
@@ -215,6 +220,7 @@ class PresenceRemoteController extends GetxController {
               .putFile(newFileImage);
 
           await collectionPresence.doc(formattedCurrentDate).set({
+            "uid": uid,
             "status": "Dinas Luar",
             "date": _currentDate.toIso8601String(),
             "checkIn": {

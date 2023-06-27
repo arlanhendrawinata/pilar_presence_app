@@ -89,6 +89,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.2"
+  change_case:
+    dependency: "direct main"
+    description:
+      name: change_case
+      sha256: f4e08feaa845e75e4f5ad2b0e15f24813d7ea6c27e7b78252f0c17f752cf1157
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.0"
   characters:
     dependency: transitive
     description:
@@ -462,6 +470,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.8.1"
+  flutter_slidable:
+    dependency: "direct main"
+    description:
+      name: flutter_slidable
+      sha256: cc4231579e3eae41ae166660df717f4bad1359c87f4a4322ad8ba1befeb3d2be
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.0"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -736,6 +752,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.0"
+  nanoid:
+    dependency: "direct main"
+    description:
+      name: nanoid
+      sha256: be3f8752d9046c825df2f3914195151eb876f3ad64b9d833dd0b799b77b8759e
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
   nm:
     dependency: transitive
     description:
@@ -848,6 +872,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.4.0"
+  photo_view:
+    dependency: "direct main"
+    description:
+      name: photo_view
+      sha256: "8036802a00bae2a78fc197af8a158e3e2f7b500561ed23b4c458107685e645bb"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.14.0"
   platform:
     dependency: transitive
     description:
@@ -952,6 +984,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.27.7"
+  sizer:
+    dependency: "direct main"
+    description:
+      name: sizer
+      sha256: d2b3cb6cbc4a637f508dacd786bae55df31e5fc088044248a43e4fd1e050c117
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.15"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -1085,6 +1125,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.3.1"
+  universal_io:
+    dependency: transitive
+    description:
+      name: universal_io
+      sha256: "1722b2dcc462b4b2f3ee7d188dad008b6eb4c40bbd03a3de451d82c78bba9aad"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.2.2"
   uri:
     dependency: transitive
     description:

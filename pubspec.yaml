@@ -38,6 +38,11 @@ dependencies:
   connectivity_plus: 3.0.2
   internet_connection_checker: ^1.0.0+1
   flutter_datetime_picker: 1.5.1
+  sizer: 2.0.15
+  nanoid: 1.0.0
+  flutter_slidable: 3.0.0
+  photo_view: 0.14.0
+  change_case: 1.1.0
   flutter: 
     sdk: flutter
 

@@ -11,11 +11,15 @@ class CustomInput extends StatefulWidget {
   final bool obsecureText;
   final Widget? suffixIcon;
   final BuildContext context;
+  final TextInputType? keyboardType;
+  final double? width;
   const CustomInput({
     required this.controller,
     required this.label,
     required this.hint,
     required this.context,
+    this.keyboardType = TextInputType.text,
+    this.width,
     this.disabled = false,
     this.margin = const EdgeInsets.only(bottom: 16),
     this.obsecureText = false,
@@ -30,7 +34,7 @@ class _CustomInputState extends State<CustomInput> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width,
+      width: widget.width ?? MediaQuery.of(context).size.width,
       padding: const EdgeInsets.only(left: 14, right: 14, top: 4),
       // margin: widget.margin,
       decoration: BoxDecoration(
@@ -44,6 +48,7 @@ class _CustomInputState extends State<CustomInput> {
         readOnly: widget.disabled,
         obscureText: widget.obsecureText,
         cursorHeight: 20,
+        keyboardType: widget.keyboardType,
         style: TextStyle(
           fontSize: Constant.textSize(context: context, fontSize: 14),
         ),

@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:pilar_presence_app/app/routes/app_pages.dart';
 import 'package:pilar_presence_app/app/style/app_color.dart';
 import 'package:pilar_presence_app/app/widgets/custom_input.dart';
 import 'package:pilar_presence_app/constant.dart';
@@ -24,7 +25,7 @@ class ForgotPasswordView extends GetView<ForgotPasswordController> {
         ),
         leading: ScreenUtilInit(
           builder: (context, child) => IconButton(
-            onPressed: () => Get.back(),
+            onPressed: () => Get.offNamed(Routes.LOGIN),
             icon: Icon(
               Ionicons.arrow_back,
               color: Colors.black87,

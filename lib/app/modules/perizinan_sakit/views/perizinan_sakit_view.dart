@@ -1,6 +1,8 @@
+import 'package:change_case/change_case.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:intl/intl.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
@@ -8,7 +10,7 @@ import 'package:pilar_presence_app/app/routes/app_pages.dart';
 import 'package:pilar_presence_app/app/style/app_color.dart';
 import 'package:pilar_presence_app/app/widgets/custom_alert_dialog.dart';
 import 'package:pilar_presence_app/constant.dart';
-
+import 'package:photo_view/photo_view.dart';
 import '../controllers/perizinan_sakit_controller.dart';
 
 class PerizinanSakitView extends GetView<PerizinanSakitController> {
@@ -351,92 +353,151 @@ class PerizinanSakitView extends GetView<PerizinanSakitController> {
                       snapshot.data?.docs.length != 0) {
                     List<QueryDocumentSnapshot<Map<String, dynamic>>>
                         allDatePerizinanSakit = snapshot.data!.docs;
-                    return ListView.builder(
-                      padding: const EdgeInsets.symmetric(vertical: 0),
-                      shrinkWrap: true,
-                      itemCount: allDatePerizinanSakit.length,
-                      itemBuilder: ((context, index) {
-                        Map<String, dynamic> data =
-                            allDatePerizinanSakit[index].data();
-                        return Container(
-                          margin: const EdgeInsets.only(bottom: 20),
-                          padding: const EdgeInsets.all(20),
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                                width: 1.5, color: AppColor.secondaryExtraSoft),
-                            borderRadius: BorderRadius.circular(10),
-                            color: Colors.white,
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    DateFormat('EEEE, MMM d, ' 'yyyy')
-                                        .format(DateTime.parse(data['date'])),
-                                    style: TextStyle(
-                                      color: Colors.black87,
-                                      fontSize: Constant.textSize(
-                                          context: context, fontSize: 14),
-                                    ),
-                                  ),
-                                  const SizedBox(height: 5),
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(5),
-                                      color: (data['status'] == "pending")
-                                          ? AppColor.warningSoft
-                                          : (data['status'] == "approved")
-                                              ? AppColor.successSoft
-                                              : AppColor.errorSoft,
-                                    ),
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 5, horizontal: 5),
-                                    child: Text(
-                                      "${data['status']}",
-                                      style: TextStyle(
-                                        color: (data['status'] == "pending")
-                                            ? AppColor.warning
-                                            : (data['status'] == "approved")
-                                                ? AppColor.success
-                                                : AppColor.error,
-                                        fontSize: Constant.textSize(
-                                            context: context, fontSize: 13),
-                                      ),
-                                    ),
-                                  ),
-                                ],
+                    return SizedBox(
+                      height: Get.height * 0.5,
+                      child: ListView.builder(
+                        padding: const EdgeInsets.symmetric(vertical: 0),
+                        shrinkWrap: true,
+                        itemCount: allDatePerizinanSakit.length,
+                        itemBuilder: ((context, index) {
+                          Map<String, dynamic> data =
+                              allDatePerizinanSakit[index].data();
+                          return Card(
+                            shape: RoundedRectangleBorder(
+                              side: BorderSide(
+                                  width: 1, color: AppColor.secondaryExtraSoft),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            elevation: 0,
+                            margin: index != allDatePerizinanSakit.length - 1
+                                ? const EdgeInsets.only(bottom: 10)
+                                : const EdgeInsets.only(bottom: 0),
+                            child: ExpansionTile(
+                              leading: (data['status'] == 'pending')
+                                  ? Icon(
+                                      Ionicons.alarm,
+                                      color: AppColor.warning,
+                                    )
+                                  : (data['status'] == 'rejected')
+                                      ? Icon(
+                                          Ionicons.close_circle_outline,
+                                          color: AppColor.error,
+                                        )
+                                      : Icon(
+                                          Ionicons.checkmark_circle_outline,
+                                          color: AppColor.success,
+                                        ),
+                              shape: Border.all(width: 0, color: Colors.white),
+                              title: Text(
+                                DateFormat('EEEE, MMM d, ' 'yyyy')
+                                    .format(DateTime.parse(data['date'])),
+                                style: TextStyle(
+                                  color: Colors.black87,
+                                  fontSize: Constant.textSize(
+                                      context: context, fontSize: 14),
+                                ),
                               ),
-                              const SizedBox(width: 16),
-                              Column(
-                                children: [
-                                  TextButton(
-                                    style: TextButton.styleFrom(
-                                        minimumSize: Size.zero,
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 4, horizontal: 6),
-                                        backgroundColor: secondaryColor),
-                                    onPressed: () =>
-                                        CustomAlertDialog.showPhoto(
-                                            context: context,
-                                            photoURL: data['photoURL']),
-                                    child: Text(
-                                      "Lihat Foto",
-                                      style: TextStyle(
-                                        fontSize: Constant.textSize(
-                                            context: context, fontSize: 13),
-                                      ),
+                              children: [
+                                SizedBox(
+                                  width: Get.width,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        bottom: 20, left: 16, right: 16),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          height: 1,
+                                          width: Get.width,
+                                          decoration: BoxDecoration(
+                                            color: AppColor.secondaryExtraSoft,
+                                          ),
+                                        ),
+                                        SizedBox(height: 10),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              "Keterangan",
+                                              style: TextStyle(
+                                                color: Colors.black87,
+                                                fontSize: Constant.textSize(
+                                                    context: context,
+                                                    fontSize: 12),
+                                              ),
+                                            ),
+                                            Text(
+                                              "${data['detail']}"
+                                                  .toUpperFirstCase(),
+                                              style: TextStyle(
+                                                color: AppColor.secondarySoft,
+                                                fontSize: Constant.textSize(
+                                                    context: context,
+                                                    fontSize: 14),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        SizedBox(height: 10),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              "Status",
+                                              style: TextStyle(
+                                                color: Colors.black87,
+                                                fontSize: Constant.textSize(
+                                                    context: context,
+                                                    fontSize: 12),
+                                              ),
+                                            ),
+                                            Text(
+                                              "${data['status']}"
+                                                  .toUpperFirstCase(),
+                                              style: TextStyle(
+                                                color: AppColor.secondarySoft,
+                                                fontSize: Constant.textSize(
+                                                    context: context,
+                                                    fontSize: 14),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        SizedBox(height: 10),
+                                        TextButton(
+                                          style: TextButton.styleFrom(
+                                              minimumSize: Size.zero,
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 4,
+                                                      horizontal: 6),
+                                              backgroundColor: secondaryColor),
+                                          onPressed: () => Get.toNamed(
+                                              Routes.PHOTO_VIEW,
+                                              arguments: data['photoURL']),
+                                          child: Text(
+                                            "Lihat Foto",
+                                            style: TextStyle(
+                                              fontSize: Constant.textSize(
+                                                  context: context,
+                                                  fontSize: 13),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        );
-                      }),
+                                ),
+                              ],
+                            ),
+                          );
+                        }),
+                      ),
                     );
                   } else {
                     return Container(

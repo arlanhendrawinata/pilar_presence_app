@@ -1,9 +1,13 @@
 import 'package:get/get.dart';
 
+import '../modules/account_validation/bindings/account_validation_binding.dart';
+import '../modules/account_validation/views/account_validation_view.dart';
 import '../modules/admin_menu/bindings/admin_menu_binding.dart';
 import '../modules/admin_menu/views/admin_menu_view.dart';
 import '../modules/announcement/bindings/announcement_binding.dart';
 import '../modules/announcement/views/announcement_view.dart';
+import '../modules/announcement_add/bindings/announcement_add_binding.dart';
+import '../modules/announcement_add/views/announcement_add_view.dart';
 import '../modules/cuti_tahunan/bindings/cuti_tahunan_binding.dart';
 import '../modules/cuti_tahunan/views/cuti_tahunan_view.dart';
 import '../modules/forgot_password/bindings/forgot_password_binding.dart';
@@ -12,8 +16,14 @@ import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
+import '../modules/management_announcement/bindings/management_announcement_binding.dart';
+import '../modules/management_announcement/views/management_announcement_view.dart';
+import '../modules/management_user/bindings/management_user_binding.dart';
+import '../modules/management_user/views/management_user_view.dart';
 import '../modules/map/bindings/map_binding.dart';
 import '../modules/map/views/map_view.dart';
+import '../modules/monitoring/bindings/monitoring_binding.dart';
+import '../modules/monitoring/views/monitoring_view.dart';
 import '../modules/myPageView/bindings/my_page_view_binding.dart';
 import '../modules/myPageView/views/my_page_view_view.dart';
 import '../modules/new_password/bindings/new_password_binding.dart';
@@ -36,12 +46,16 @@ import '../modules/perizinan_sakit/bindings/perizinan_sakit_binding.dart';
 import '../modules/perizinan_sakit/views/perizinan_sakit_view.dart';
 import '../modules/perizinan_sakit_request/bindings/perizinan_sakit_request_binding.dart';
 import '../modules/perizinan_sakit_request/views/perizinan_sakit_request_view.dart';
+import '../modules/photo_view/bindings/photo_view_binding.dart';
+import '../modules/photo_view/views/photo_view_view.dart';
 import '../modules/presenceRemote/bindings/presence_remote_binding.dart';
 import '../modules/presenceRemote/views/presence_remote_view.dart';
 import '../modules/presence_detail/bindings/presence_detail_binding.dart';
 import '../modules/presence_detail/views/presence_detail_view.dart';
 import '../modules/presence_history/bindings/presence_history_binding.dart';
 import '../modules/presence_history/views/presence_history_view.dart';
+import '../modules/report/bindings/report_binding.dart';
+import '../modules/report/views/report_view.dart';
 import '../modules/user_add/bindings/user_add_binding.dart';
 import '../modules/user_add/views/user_add_view.dart';
 import '../modules/user_profile/bindings/user_profile_binding.dart';
@@ -197,6 +211,41 @@ class AppPages {
       name: _Paths.PERIZINAN_SAKIT_REQUEST,
       page: () => const PerizinanSakitRequestView(),
       binding: PerizinanSakitRequestBinding(),
+    ),
+    GetPage(
+      name: _Paths.MANAGEMENT_USER,
+      page: () => const ManagementUserView(),
+      binding: ManagementUserBinding(),
+    ),
+    GetPage(
+      name: _Paths.MONITORING,
+      page: () => const MonitoringView(),
+      binding: MonitoringBinding(),
+    ),
+    GetPage(
+      name: _Paths.MANAGEMENT_ANNOUNCEMENT,
+      page: () => const ManagementAnnouncementView(),
+      binding: ManagementAnnouncementBinding(),
+    ),
+    GetPage(
+      name: _Paths.REPORT,
+      page: () => const ReportView(),
+      binding: ReportBinding(),
+    ),
+    GetPage(
+      name: _Paths.ACCOUNT_VALIDATION,
+      page: () => const AccountValidationView(),
+      binding: AccountValidationBinding(),
+    ),
+    GetPage(
+      name: _Paths.ANNOUNCEMENT_ADD,
+      page: () => const AnnouncementAddView(),
+      binding: AnnouncementAddBinding(),
+    ),
+    GetPage(
+      name: _Paths.PHOTO_VIEW,
+      page: () => const PhotoViewView(),
+      binding: PhotoViewBinding(),
     ),
   ];
 }

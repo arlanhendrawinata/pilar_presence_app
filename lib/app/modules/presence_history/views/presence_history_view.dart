@@ -88,10 +88,8 @@ class PresenceHistoryView extends GetView<PresenceHistoryController> {
           future: controller.getPresence(),
           builder: (context, snapshot) {
             if (snapshot.data?.size != 0) {
-              // print(snapshot.data?.size);
               List<QueryDocumentSnapshot<Map<String, dynamic>>>? dataPresence =
                   snapshot.data?.docs;
-
               return RefreshIndicator(
                 onRefresh: controller.onRefresh,
                 child: ListView.builder(
@@ -106,10 +104,9 @@ class PresenceHistoryView extends GetView<PresenceHistoryController> {
                       margin: const EdgeInsets.only(bottom: 20),
                       decoration: BoxDecoration(
                         border: Border.all(
-                            width: 1.5,
-                            color: data?['checkIn']['presence_status'] != "late"
-                                ? AppColor.secondaryExtraSoft
-                                : AppColor.softRed),
+                          width: 1.5,
+                          color: AppColor.secondaryExtraSoft,
+                        ),
                         borderRadius: BorderRadius.circular(10),
                         color: Colors.white,
                       ),
@@ -183,20 +180,48 @@ class PresenceHistoryView extends GetView<PresenceHistoryController> {
                                     ),
                                   ],
                                 ),
-                                Expanded(
-                                  child: Text(
-                                    (data?['date'] != null)
-                                        ? DateFormat('EEEE, MMM d, ' 'yyyy')
-                                            .format(
-                                                DateTime.parse(data?['date']))
-                                        : "-",
-                                    textAlign: TextAlign.end,
-                                    style: TextStyle(
-                                      fontSize: Constant.textSize(
-                                          context: context, fontSize: 12),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    Container(
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: 4, horizontal: 8),
+                                      decoration: BoxDecoration(
+                                        color: (data?['checkIn']
+                                                    ['presence_status'] !=
+                                                'ontime')
+                                            ? AppColor.errorSoft
+                                            : AppColor.successSoft,
+                                        borderRadius: BorderRadius.circular(5),
+                                      ),
+                                      child: Text(
+                                        "${data?['checkIn']['presence_status'] != 'ontime' ? 'Telat' : 'Tepat Waktu'}",
+                                        style: TextStyle(
+                                          color: (data?['checkIn']
+                                                      ['presence_status'] !=
+                                                  'ontime')
+                                              ? AppColor.error
+                                              : AppColor.success,
+                                          fontSize: Constant.textSize(
+                                              context: context, fontSize: 12),
+                                        ),
+                                      ),
                                     ),
-                                  ),
-                                )
+                                    const SizedBox(height: 5),
+                                    Text(
+                                      (data?['date'] != null)
+                                          ? DateFormat('EEEE, MMM d, ' 'yyyy')
+                                              .format(
+                                                  DateTime.parse(data?['date']))
+                                          : "-",
+                                      textAlign: TextAlign.end,
+                                      style: TextStyle(
+                                        fontSize: Constant.textSize(
+                                            context: context, fontSize: 12),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ],
                             ),
                           ),

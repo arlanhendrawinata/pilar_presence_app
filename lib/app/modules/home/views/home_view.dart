@@ -38,7 +38,7 @@ class HomeView extends GetView<HomeController> {
                     //* TODAY PRESENCE STREAM
                     stream: controller.presenceC.streamPresence(),
                     builder: (context, snapshotPresence) {
-                      if (snapshotPresence.hasData) {
+                      if (snapshotPresence.data?.data() != null) {
                         return Column(
                           children: [
                             SizedBox(
@@ -62,9 +62,6 @@ class HomeView extends GetView<HomeController> {
                                       cardPresence(context, user, dataPresence),
                                       const SizedBox(height: 20),
                                       menuFeatures(context, user),
-                                      const SizedBox(height: 20),
-                                      //* CARD DISTANCE AND MAPS
-                                      card2(context, dataPresence),
                                     ],
                                   );
                                 } else {
@@ -77,8 +74,6 @@ class HomeView extends GetView<HomeController> {
                                           cardPresenceIsNull(context),
                                           const SizedBox(height: 20),
                                           menuFeatures(context, user),
-                                          const SizedBox(height: 20),
-                                          card2IsNull(context),
                                         ],
                                       ),
                                     ],
@@ -92,14 +87,14 @@ class HomeView extends GetView<HomeController> {
                               stream: controller.presenceC
                                   .streamLast5daysPresence(),
                               builder: (context, snapshotLast5days) {
-                                if (snapshotLast5days.hasData) {
+                                if (snapshotLast5days.data != null) {
                                   List<
                                           QueryDocumentSnapshot<
                                               Map<String, dynamic>>> last5days =
                                       snapshotLast5days.data!.docs;
                                   return swiper(context, last5days);
                                 } else {
-                                  return const SizedBox();
+                                  return historyPresenceIsNull(context);
                                 }
                               },
                             ),
@@ -108,6 +103,9 @@ class HomeView extends GetView<HomeController> {
                       } else {
                         return Column(
                           children: [
+                            SizedBox(
+                              height: context.mediaQueryPadding.top,
+                            ),
                             userProfile(photoURL, profileName, context),
                             const SizedBox(height: 30),
                             infoPresenceIsNull(context),
@@ -116,36 +114,59 @@ class HomeView extends GetView<HomeController> {
                               children: [
                                 cardPresenceIsNull(context),
                                 const SizedBox(height: 20),
-                                card2IsNull(context),
+                                menuFeatures(context, user),
                               ],
                             ),
-                            const SizedBox(height: 20),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            const SizedBox(height: 10),
+                            Column(
                               children: [
-                                Text(
-                                  "Histori Kehadiran",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: Constant.textSize(
-                                        context: context, fontSize: 13),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 10),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        "Histori Kehadiran",
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: Constant.textSize(
+                                              context: context, fontSize: 13),
+                                        ),
+                                      ),
+                                      TextButton(
+                                          onPressed: () => Get.toNamed(
+                                              Routes.PRESENCE_HISTORY),
+                                          child: Text(
+                                            "semua histori",
+                                            style: TextStyle(
+                                              color: primaryColor,
+                                              fontSize: Constant.textSize(
+                                                  context: context,
+                                                  fontSize: 13),
+                                            ),
+                                          )),
+                                    ],
                                   ),
                                 ),
-                                TextButton(
-                                    onPressed: () =>
-                                        Get.toNamed(Routes.PRESENCE_HISTORY),
-                                    child: Text(
-                                      "semua histori",
-                                      style: TextStyle(
-                                        color: primaryColor,
-                                        fontSize: Constant.textSize(
-                                            context: context, fontSize: 14),
-                                      ),
-                                    )),
+                                historyPresenceIsNull(context),
                               ],
-                            ),
-                            const SizedBox(height: 20),
-                            historyPresenceIsNull(context)
+                            )
+                            // StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                            //   stream: controller.presenceC
+                            //       .streamLast5daysPresence(),
+                            //   builder: (context, snapshotLast5days) {
+                            //     if (snapshotLast5days.data != null) {
+                            //       List<
+                            //               QueryDocumentSnapshot<
+                            //                   Map<String, dynamic>>> last5days =
+                            //           snapshotLast5days.data!.docs;
+                            //       return swiper(context, last5days);
+                            //     } else {
+                            //     }
+                            //   },
+                            // ),
+                            // historyPresenceIsNull(context)
                           ],
                         );
                       }
@@ -409,7 +430,7 @@ class HomeView extends GetView<HomeController> {
 
   Widget historyPresenceIsNull(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+      padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 20),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(10),
@@ -427,7 +448,7 @@ class HomeView extends GetView<HomeController> {
         children: [
           Icon(
             Ionicons.information_circle_outline,
-            color: dangerColor,
+            color: infoColor,
             size: 26,
           ),
           const SizedBox(
@@ -438,11 +459,11 @@ class HomeView extends GetView<HomeController> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Tidak ada histori kehadiran",
+                  "Tidak ada histori kehadiran.",
                   style: TextStyle(
-                      color: dangerColor,
-                      fontSize:
-                          Constant.textSize(context: context, fontSize: 14)),
+                    color: infoColor,
+                    fontSize: Constant.textSize(context: context, fontSize: 14),
+                  ),
                 ),
               ],
             ),
@@ -568,218 +589,6 @@ class HomeView extends GetView<HomeController> {
           ],
         ),
       ),
-    );
-  }
-
-  Widget card2(BuildContext context, Map<String, dynamic> dataPresence) {
-    int distanceMeterCheckIn = dataPresence['checkIn']['distance'].round();
-
-    int distanceKiloMeterCheckIn = (distanceMeterCheckIn / 1000).round();
-
-    int distanceMeterCheckOut;
-    dataPresence['checkOut'] != null
-        ? distanceMeterCheckOut = dataPresence['checkOut']['distance'].round()
-        : distanceMeterCheckOut = 0;
-
-    int distanceKiloMeterCheckOut;
-    dataPresence['checkOut'] != null
-        ? distanceKiloMeterCheckOut = (distanceMeterCheckIn / 1000).round()
-        : distanceKiloMeterCheckOut = 0;
-
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Expanded(
-          child: Container(
-            height: 84,
-            decoration: BoxDecoration(
-              color: const Color(0xff56a1bf),
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "Jarak dari kantor",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: WhiteSoftColor,
-                    fontSize: Constant.textSize(context: context, fontSize: 12),
-                  ),
-                ),
-                const SizedBox(height: 6),
-                Text(
-                  (dataPresence["checkOut"] != null)
-                      ? (distanceMeterCheckOut >= 1000
-                          ? "${distanceKiloMeterCheckOut}km"
-                          : "${distanceMeterCheckOut}m")
-                      : (distanceMeterCheckIn >= 1000
-                          ? "${distanceKiloMeterCheckIn}km"
-                          : "${distanceMeterCheckIn}m"),
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize:
-                          Constant.textSize(context: context, fontSize: 14),
-                      color: Colors.white),
-                ),
-              ],
-            ),
-          ),
-        ),
-        const SizedBox(
-          width: 20,
-        ),
-        Expanded(
-          child: Container(
-            decoration: BoxDecoration(
-              color: softBlueColor,
-              borderRadius: BorderRadius.circular(8),
-              image: const DecorationImage(
-                image: AssetImage('assets/map.jpg'),
-                fit: BoxFit.cover,
-                opacity: 0.3,
-              ),
-            ),
-            child: Material(
-              color: Colors.transparent,
-              child: InkWell(
-                borderRadius: BorderRadius.circular(10),
-                onTap: () => controller.routeToMap(),
-                child: Container(
-                  height: 84,
-                  alignment: Alignment.center,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      const Icon(
-                        Ionicons.navigate,
-                        color: Colors.white,
-                        size: 18,
-                      ),
-                      const SizedBox(width: 10),
-                      Text(
-                        'Peta Lokasi',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white,
-                          fontSize:
-                              Constant.textSize(context: context, fontSize: 14),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget card2IsNull(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Expanded(
-          child: Container(
-            decoration: BoxDecoration(
-              color: const Color(0xff56a1bf),
-              borderRadius: BorderRadius.circular(10),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.05),
-                  spreadRadius: 4,
-                  blurRadius: 4, // changes position of shadow
-                ),
-              ],
-            ),
-            child: Container(
-              height: 84,
-              alignment: Alignment.center,
-              padding: const EdgeInsets.all(10),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Jarak dari kantor",
-                    style: TextStyle(
-                      color: WhiteSoftColor,
-                      fontSize:
-                          Constant.textSize(context: context, fontSize: 12),
-                    ),
-                  ),
-                  const SizedBox(height: 6),
-                  Text(
-                    "-",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize:
-                            Constant.textSize(context: context, fontSize: 16),
-                        color: Colors.white),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-        const SizedBox(
-          width: 20,
-        ),
-        Expanded(
-          child: Container(
-            decoration: BoxDecoration(
-              color: softBlueColor,
-              borderRadius: BorderRadius.circular(8),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.05),
-                  spreadRadius: 4,
-                  blurRadius: 4, // changes position of shadow
-                ),
-              ],
-              image: const DecorationImage(
-                image: AssetImage('assets/map.jpg'),
-                fit: BoxFit.cover,
-                opacity: 0.3,
-              ),
-            ),
-            child: Material(
-              color: Colors.transparent,
-              child: InkWell(
-                borderRadius: BorderRadius.circular(10),
-                onTap: () => controller.routeToMap(),
-                child: Container(
-                  height: 84,
-                  alignment: Alignment.center,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      const Icon(
-                        Ionicons.navigate,
-                        color: Colors.white,
-                        size: 18,
-                      ),
-                      const SizedBox(width: 10),
-                      Text(
-                        'Peta Lokasi',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white,
-                          fontSize:
-                              Constant.textSize(context: context, fontSize: 14),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ),
-      ],
     );
   }
 
@@ -1174,132 +983,238 @@ class HomeView extends GetView<HomeController> {
   }
 
   Widget menuFeatures(BuildContext context, Map<String, dynamic>? user) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              (user!["role"] == "admin")
-                  ? Column(
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            color: secondaryColor,
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: InkWell(
-                            onTap: () => Get.toNamed(Routes.ADMIN_MENU),
-                            child: Icon(
-                              Ionicons.person_outline,
-                              color: primaryColor,
-                              size: 20,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          "Admin",
-                          style: TextStyle(
-                            color: Colors.black87,
-                            fontSize: Constant.textSize(
-                                context: context, fontSize: 12),
-                          ),
-                        ),
-                      ],
-                    )
-                  : const SizedBox(),
-              Column(
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      color: secondaryColor,
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: InkWell(
-                      onTap: () => Get.toNamed(Routes.OVERTIME),
-                      child: Icon(
-                        Ionicons.time_outline,
-                        color: primaryColor,
-                        size: 20,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    "Lembur",
-                    style: TextStyle(
-                      color: Colors.black87,
-                      fontSize:
-                          Constant.textSize(context: context, fontSize: 12),
-                    ),
-                  ),
-                ],
-              ),
-              Column(
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      color: secondaryColor,
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: InkWell(
-                      onTap: () => Get.toNamed(Routes.PERIZINAN_CUTI),
-                      child: Icon(
-                        Ionicons.airplane_outline,
-                        color: primaryColor,
-                        size: 20,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    "Cuti",
-                    style: TextStyle(
-                      color: Colors.black87,
-                      fontSize:
-                          Constant.textSize(context: context, fontSize: 12),
-                    ),
-                  ),
-                ],
-              ),
-              Column(
-                children: [
-                  Container(
+    if (user!["role"] == "admin") {
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  children: [
+                    Container(
                       padding: const EdgeInsets.all(10),
                       decoration: BoxDecoration(
                         color: secondaryColor,
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: InkWell(
-                        onTap: () => Get.toNamed(Routes.PERIZINAN_SAKIT),
+                        onTap: () => Get.toNamed(Routes.ADMIN_MENU),
                         child: Icon(
-                          Ionicons.thermometer_outline,
+                          Ionicons.person_outline,
                           color: primaryColor,
                           size: 20,
                         ),
-                      )),
-                  const SizedBox(height: 8),
-                  Text(
-                    "Sakit",
-                    style: TextStyle(
-                      color: Colors.black87,
-                      fontSize:
-                          Constant.textSize(context: context, fontSize: 12),
+                      ),
                     ),
+                    const SizedBox(height: 8),
+                    Text(
+                      "Admin",
+                      style: TextStyle(
+                        color: Colors.black87,
+                        fontSize:
+                            Constant.textSize(context: context, fontSize: 12),
+                      ),
+                    ),
+                  ],
+                ),
+                Column(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        color: secondaryColor,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: InkWell(
+                        onTap: () => Get.toNamed(Routes.OVERTIME),
+                        child: Icon(
+                          Ionicons.time_outline,
+                          color: primaryColor,
+                          size: 20,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      "Lembur",
+                      style: TextStyle(
+                        color: Colors.black87,
+                        fontSize:
+                            Constant.textSize(context: context, fontSize: 12),
+                      ),
+                    ),
+                  ],
+                ),
+                Column(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        color: secondaryColor,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: InkWell(
+                        onTap: () => Get.toNamed(Routes.PERIZINAN_CUTI),
+                        child: Icon(
+                          Ionicons.airplane_outline,
+                          color: primaryColor,
+                          size: 20,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      "Cuti",
+                      style: TextStyle(
+                        color: Colors.black87,
+                        fontSize:
+                            Constant.textSize(context: context, fontSize: 12),
+                      ),
+                    ),
+                  ],
+                ),
+                Column(
+                  children: [
+                    Container(
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: secondaryColor,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: InkWell(
+                          onTap: () => Get.toNamed(Routes.PERIZINAN_SAKIT),
+                          child: Icon(
+                            Ionicons.thermometer_outline,
+                            color: primaryColor,
+                            size: 20,
+                          ),
+                        )),
+                    const SizedBox(height: 8),
+                    Text(
+                      "Sakit",
+                      style: TextStyle(
+                        color: Colors.black87,
+                        fontSize:
+                            Constant.textSize(context: context, fontSize: 12),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            const Row(),
+          ],
+        ),
+      );
+    } else {
+      return Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                children: [
+                  Container(
+                    width: Get.width * 0.33 - 26,
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: secondaryColor,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: InkWell(
+                        onTap: () => Get.toNamed(Routes.OVERTIME),
+                        child: Row(
+                          children: [
+                            Icon(
+                              Ionicons.time_outline,
+                              color: primaryColor,
+                              size: 20,
+                            ),
+                            const SizedBox(width: 6),
+                            Text(
+                              "Lembur",
+                              style: TextStyle(
+                                color: Colors.black87,
+                                fontSize: Constant.textSize(
+                                    context: context, fontSize: 12),
+                              ),
+                            ),
+                          ],
+                        )),
                   ),
+                ],
+              ),
+              Column(
+                children: [
+                  Container(
+                    width: Get.width * 0.33 - 26,
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: secondaryColor,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: InkWell(
+                        onTap: () => Get.toNamed(Routes.PERIZINAN_CUTI),
+                        child: Row(
+                          children: [
+                            Icon(
+                              Ionicons.airplane_outline,
+                              color: primaryColor,
+                              size: 20,
+                            ),
+                            const SizedBox(width: 6),
+                            Text(
+                              "Cuti",
+                              style: TextStyle(
+                                color: Colors.black87,
+                                fontSize: Constant.textSize(
+                                    context: context, fontSize: 12),
+                              ),
+                            ),
+                          ],
+                        )),
+                  ),
+                ],
+              ),
+              Column(
+                children: [
+                  Container(
+                      width: Get.width * 0.33 - 26,
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        color: secondaryColor,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: InkWell(
+                          onTap: () => Get.toNamed(Routes.PERIZINAN_SAKIT),
+                          child: Row(
+                            children: [
+                              Icon(
+                                Ionicons.thermometer_outline,
+                                color: primaryColor,
+                                size: 20,
+                              ),
+                              const SizedBox(width: 6),
+                              Text(
+                                "Sakit",
+                                style: TextStyle(
+                                  color: Colors.black87,
+                                  fontSize: Constant.textSize(
+                                      context: context, fontSize: 12),
+                                ),
+                              ),
+                            ],
+                          ))),
                 ],
               ),
             ],
           ),
           const Row(),
         ],
-      ),
-    );
+      );
+    }
   }
 
   Widget perizinan(BuildContext context) {

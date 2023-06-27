@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-// import 'package:flutter_datetime_picker/flutter_datetime_picker.dart'
-//     as datetimepicker2;
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:pilar_presence_app/app/style/app_color.dart';
@@ -25,14 +22,12 @@ class OvertimeRequestView extends GetView<OvertimeRequestController> {
             fontSize: Constant.textSize(context: context, fontSize: 14),
           ),
         ),
-        leading: ScreenUtilInit(
-          builder: (context, child) => IconButton(
-            onPressed: () => Get.back(),
-            icon: Icon(
-              Ionicons.arrow_back,
-              color: Colors.black87,
-              size: 22.sp,
-            ),
+        leading: IconButton(
+          onPressed: () => Get.back(),
+          icon: const Icon(
+            Ionicons.arrow_back,
+            color: Colors.black87,
+            size: 22,
           ),
         ),
         backgroundColor: Colors.white,
@@ -51,7 +46,7 @@ class OvertimeRequestView extends GetView<OvertimeRequestController> {
         height: MediaQuery.of(context).size.height,
         color: Colors.white,
         child: SingleChildScrollView(
-          padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 20.w),
+          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
           child: Column(
             children: [
               Row(
@@ -63,12 +58,12 @@ class OvertimeRequestView extends GetView<OvertimeRequestController> {
                         hint: "20/04/2022",
                         context: context),
                   ),
-                  SizedBox(width: 10.w),
+                  const SizedBox(width: 10),
                   Container(
                     padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
                       color: const Color(0xfff8dcdf),
-                      borderRadius: BorderRadius.circular(10.r),
+                      borderRadius: BorderRadius.circular(10),
                     ),
                     child: IconButton(
                       onPressed: () {
@@ -81,7 +76,7 @@ class OvertimeRequestView extends GetView<OvertimeRequestController> {
                       },
                       icon: Icon(
                         Ionicons.calendar,
-                        size: 22.w,
+                        size: 22,
                         color: primaryColor,
                       ),
                     ),
@@ -106,18 +101,6 @@ class OvertimeRequestView extends GetView<OvertimeRequestController> {
                       onTap: () {
                         if (controller.dateC.text != "") {
                           controller.getTime(context, controller.timeStart);
-                          // DatePicker.showTimePicker(
-                          //   context,
-                          //   showSecondsColumn: false,
-                          //   showTitleActions: true,
-                          //   currentTime:
-                          //       DateTime.parse("${controller.dateC.text}"),
-                          //   onConfirm: (time) {
-                          //     controller.dateTimeStart = "${time}";
-                          //     controller.timeStart?.value =
-                          //         "${controller.timeFormat.format(time)}";
-                          //   },
-                          // );
                         } else {
                           CustomToast.infoToast(
                               "Tanggal Kosong",
@@ -129,7 +112,7 @@ class OvertimeRequestView extends GetView<OvertimeRequestController> {
                         padding: const EdgeInsets.all(20),
                         decoration: BoxDecoration(
                           color: Colors.transparent,
-                          borderRadius: BorderRadius.circular(8.r),
+                          borderRadius: BorderRadius.circular(8),
                           border: Border.all(
                               width: 1, color: AppColor.secondaryExtraSoft),
                         ),
@@ -157,7 +140,7 @@ class OvertimeRequestView extends GetView<OvertimeRequestController> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 20.w),
+                  const SizedBox(width: 20),
                   Expanded(
                     child: InkWell(
                       onTap: () {
@@ -186,7 +169,7 @@ class OvertimeRequestView extends GetView<OvertimeRequestController> {
                         padding: const EdgeInsets.all(20),
                         decoration: BoxDecoration(
                           color: Colors.transparent,
-                          borderRadius: BorderRadius.circular(8.r),
+                          borderRadius: BorderRadius.circular(8),
                           border: Border.all(
                               width: 1, color: AppColor.secondaryExtraSoft),
                         ),
@@ -216,9 +199,9 @@ class OvertimeRequestView extends GetView<OvertimeRequestController> {
                   ),
                 ],
               ),
-              SizedBox(height: 20.h),
+              const SizedBox(height: 20),
               SizedBox(
-                height: 50.h,
+                height: 50,
                 width: Get.width,
                 child: Obx(
                   () => ElevatedButton(
@@ -232,7 +215,7 @@ class OvertimeRequestView extends GetView<OvertimeRequestController> {
                       // padding: EdgeInsets.symmetric(vertical: 18),
                       elevation: 0,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8.r),
+                        borderRadius: BorderRadius.circular(8),
                       ),
                     ),
                     child: (controller.isLoading.isFalse)
@@ -243,10 +226,10 @@ class OvertimeRequestView extends GetView<OvertimeRequestController> {
                                   context: context, fontSize: 14),
                             ),
                           )
-                        : SizedBox(
-                            height: 20.h,
-                            width: 20.w,
-                            child: const CircularProgressIndicator(
+                        : const SizedBox(
+                            height: 20,
+                            width: 20,
+                            child: CircularProgressIndicator(
                               color: Colors.white,
                             ),
                           ),

@@ -30,6 +30,14 @@ abstract class Routes {
   static const PERIZINAN_SAKIT = _Paths.PERIZINAN_SAKIT;
   static const PERIZINAN_SAKIT_REQUEST = _Paths.PERIZINAN_SAKIT_REQUEST;
   static const CUTI_TAHUNAN_ADD = _Paths.CUTI_TAHUNAN_ADD;
+  static const MANAGEMENT_USER = _Paths.MANAGEMENT_USER;
+  static const MONITORING = _Paths.MONITORING;
+  static const MANAGEMENT_ANNOUNCEMENT = _Paths.MANAGEMENT_ANNOUNCEMENT;
+  static const REPORT = _Paths.REPORT;
+  static const ACCOUNT_VALIDATION = _Paths.ACCOUNT_VALIDATION;
+  static const PENGUMUMAN_ADD = _Paths.PENGUMUMAN_ADD;
+  static const ANNOUNCEMENT_ADD = _Paths.ANNOUNCEMENT_ADD;
+  static const PHOTO_VIEW = _Paths.PHOTO_VIEW;
 }
 
 abstract class _Paths {
@@ -61,4 +69,12 @@ abstract class _Paths {
   static const PERIZINAN_SAKIT = '/perizinan-sakit';
   static const PERIZINAN_SAKIT_REQUEST = '/perizinan-sakit-request';
   static const CUTI_TAHUNAN_ADD = '/cuti-tahunan-add';
+  static const MANAGEMENT_USER = '/management-user';
+  static const MONITORING = '/monitoring';
+  static const MANAGEMENT_ANNOUNCEMENT = '/management-announcement';
+  static const REPORT = '/report';
+  static const ACCOUNT_VALIDATION = '/account-validation';
+  static const PENGUMUMAN_ADD = '/pengumuman-add';
+  static const ANNOUNCEMENT_ADD = '/announcement-add';
+  static const PHOTO_VIEW = '/photo-view';
 }

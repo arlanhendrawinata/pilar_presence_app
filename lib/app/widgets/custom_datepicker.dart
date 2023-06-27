@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pilar_presence_app/app/style/app_color.dart';
 import 'package:pilar_presence_app/constant.dart';
 
@@ -42,7 +41,7 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
           color: (widget.disabled == false)
               ? Colors.transparent
               : AppColor.primaryExtraSoft,
-          borderRadius: BorderRadius.circular(8.r),
+          borderRadius: BorderRadius.circular(8),
           border: Border.all(width: 1, color: AppColor.secondaryExtraSoft),
         ),
         child: TextField(
