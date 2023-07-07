@@ -155,9 +155,10 @@ class OvertimeRequestController extends GetxController {
     var pickedTime = await pickTime(context);
     if (pickedTime != null) {
       String formattedTime = pickedTime.format(context);
-      DateTime convertedTime = DateFormat.jm().parse(formattedTime);
-      String time = DateFormat("HH:mm").format(convertedTime);
-      timeType.value = time;
+      // print(formattedTime);
+      // DateTime convertedTime = DateFormat.jm().parse(formattedTime);
+      // String time = DateFormat("HH:mm").format(convertedTime);
+      timeType.value = formattedTime;
     } else {
       return 0;
     }

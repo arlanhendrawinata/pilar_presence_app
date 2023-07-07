@@ -222,7 +222,7 @@ class UserUpdateProfileView extends GetView<UserUpdateProfileController> {
                   ),
                   child: (controller.isLoading.isFalse)
                       ? Text(
-                          'Ubah Profile',
+                          'Ubah Data Diri',
                           style: TextStyle(
                             fontSize: Constant.textSize(
                                 context: context, fontSize: 14),

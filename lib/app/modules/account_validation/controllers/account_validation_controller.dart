@@ -14,10 +14,6 @@ class AccountValidationController extends GetxController {
 
   RxBool isLoading = false.obs;
 
-  // void getArgument() {
-  //   print(dataArgument['name']);
-  // }
-
   Future<void> createEmployee() async {
     if (passC.text.isNotEmpty) {
       try {
@@ -39,6 +35,7 @@ class AccountValidationController extends GetxController {
             "name": dataArgument['name'],
             "email": dataArgument['email'],
             "division": dataArgument['division'],
+            "status": "active",
             "role": "user",
             "created_at": DateTime.now().toIso8601String(),
           });

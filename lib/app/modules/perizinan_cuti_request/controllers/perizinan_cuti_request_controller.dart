@@ -19,14 +19,22 @@ class PerizinanCutiRequestController extends GetxController {
   DateTime? dateStart;
   DateTime? dateEnd;
 
-  RxString defDateStart = ''.obs;
+  RxString defDateStart =
+      DateFormat.yMd().format(DateTime.now()).replaceAll("/", "-").obs;
 
-  RxString defDateEnd = ''.obs;
+  RxString defDateEnd =
+      DateFormat.yMd().format(DateTime.now()).replaceAll("/", "-").obs;
 
   int daysBetween(DateTime from, DateTime to) {
     from = DateTime(from.year, from.month, from.day);
     to = DateTime(to.year, to.month, to.day);
     return (to.difference(from).inHours / 24).round();
+  }
+
+  int daysBetween2(DateTime from, DateTime to) {
+    from = DateTime(from.year, from.month, from.day);
+    to = DateTime(to.year, to.month, to.day);
+    return to.difference(from).inDays;
   }
 
   Future<DocumentSnapshot<Map<String, dynamic>>> cutiTahunan() async {
@@ -73,17 +81,15 @@ class PerizinanCutiRequestController extends GetxController {
 
   Future<int> sisaCuti() async {
     int totalCuti =
-        await cutiTahunan().then((value) => value.data()!['amount']);
+        await cutiTahunan().then((value) => int.parse(value.data()!['amount']));
     int dateminus = await getCuti();
     return totalCuti - dateminus;
   }
 
   requestCuti() async {
-    // print(await tes());
     if (dateStart != null && dateEnd != null && ketCutiC.text != "") {
       if (dateStart!.compareTo(dateEnd!) < 0) {
-        // print("tes: ${daysBetween(dateStart!, dateEnd!) + 1}");
-        int countDateRequest = daysBetween(dateStart!, dateEnd!) + 1;
+        int countDateRequest = daysBetween2(dateStart!, dateEnd!) + 1;
         int _sisaCuti = await sisaCuti().then((value) => value);
         if (_sisaCuti - countDateRequest >= 0) {
           if (!await tes()) {

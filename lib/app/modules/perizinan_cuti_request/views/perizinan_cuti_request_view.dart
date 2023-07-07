@@ -86,7 +86,12 @@ class PerizinanCutiRequestView extends GetView<PerizinanCutiRequestController> {
                             () => Text(
                               controller.defDateStart.value,
                               style: TextStyle(
-                                  color: Colors.black,
+                                  color: controller.defDateStart.value !=
+                                          DateFormat.yMd()
+                                              .format(DateTime.now())
+                                              .replaceAll("/", "-")
+                                      ? Colors.black
+                                      : AppColor.secondarySoft,
                                   fontSize: Constant.textSize(
                                       context: context, fontSize: 14)),
                             ),
@@ -131,7 +136,12 @@ class PerizinanCutiRequestView extends GetView<PerizinanCutiRequestController> {
                             () => Text(
                               controller.defDateEnd.value,
                               style: TextStyle(
-                                  color: Colors.black,
+                                  color: controller.defDateEnd.value !=
+                                          DateFormat.yMd()
+                                              .format(DateTime.now())
+                                              .replaceAll("/", "-")
+                                      ? Colors.black
+                                      : AppColor.secondarySoft,
                                   fontSize: Constant.textSize(
                                       context: context, fontSize: 14)),
                             ),
@@ -164,7 +174,7 @@ class PerizinanCutiRequestView extends GetView<PerizinanCutiRequestController> {
                   ),
                   child: (controller.isLoading.isFalse)
                       ? Text(
-                          'Kirim permintaan sakit',
+                          'Kirim Permintaan Cuti',
                           style: TextStyle(
                             fontSize: Constant.textSize(
                                 context: context, fontSize: 14),

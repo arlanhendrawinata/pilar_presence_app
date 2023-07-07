@@ -336,11 +336,10 @@ class PerizinanRequestView extends GetView<PerizinanRequestController> {
                                                       vertical: 4,
                                                       horizontal: 6),
                                               backgroundColor: secondaryColor),
-                                          onPressed: () =>
-                                              CustomAlertDialog.showPhoto(
-                                                  context: context,
-                                                  photoURL: snapshot[index]
-                                                      ['photoURL']),
+                                          onPressed: () => Get.toNamed(
+                                              Routes.PHOTO_VIEW,
+                                              arguments: snapshot[index]
+                                                  ['photoURL']),
                                           child: Text(
                                             "Lihat Foto",
                                             style: TextStyle(

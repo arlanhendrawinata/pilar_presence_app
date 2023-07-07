@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:pilar_presence_app/app/routes/app_pages.dart';
 import 'package:pilar_presence_app/app/style/app_color.dart';
 import 'package:pilar_presence_app/app/widgets/custom_alert_dialog.dart';
 import 'package:pilar_presence_app/constant.dart';
@@ -221,9 +222,8 @@ class PresenceDetailView extends GetView<PresenceDetailController> {
                                     padding: const EdgeInsets.symmetric(
                                         vertical: 4, horizontal: 6),
                                     backgroundColor: secondaryColor),
-                                onPressed: () => CustomAlertDialog.showPhoto(
-                                    context: context,
-                                    photoURL: controller.data['checkIn']
+                                onPressed: () => Get.toNamed(Routes.PHOTO_VIEW,
+                                    arguments: controller.data['checkIn']
                                         ['photoURL']),
                                 child: Text(
                                   "Lihat Foto",
@@ -376,12 +376,10 @@ class PresenceDetailView extends GetView<PresenceDetailController> {
                                           padding: const EdgeInsets.symmetric(
                                               vertical: 4, horizontal: 6),
                                           backgroundColor: secondaryColor),
-                                      onPressed: () =>
-                                          CustomAlertDialog.showPhoto(
-                                              context: context,
-                                              photoURL:
-                                                  controller.data['checkOut']
-                                                      ['photoURL']),
+                                      onPressed: () => Get.toNamed(
+                                          Routes.PHOTO_VIEW,
+                                          arguments: controller.data['checkOut']
+                                              ['photoURL']),
                                       child: Text(
                                         "Lihat Foto",
                                         style: TextStyle(

@@ -25,6 +25,12 @@ class PerizinanCutiController extends GetxController {
         .snapshots();
   }
 
+  int daysBetween2(DateTime from, DateTime to) {
+    from = DateTime(from.year, from.month, from.day);
+    to = DateTime(to.year, to.month, to.day);
+    return to.difference(from).inDays;
+  }
+
   Future<DocumentSnapshot<Map<String, dynamic>>> cutiTahunan() async {
     int year = DateTime.now().year;
     return await firestore.collection("cuti").doc("$year").get();
@@ -52,26 +58,36 @@ class PerizinanCutiController extends GetxController {
         .collection("cuti")
         .get()
         .then((value) => value.docs.forEach((element) {
-              if (element.data()['status'] != 'rejected') {
-                int dtStart = int.parse(DateFormat.d()
-                    .format(DateTime.parse(element.data()['cuti_start'])));
-                int dtEnd = int.parse(DateFormat.d()
-                    .format(DateTime.parse(element.data()['cuti_end'])));
-                dateminus += (dtEnd - dtStart) + 1;
+              if (element.data()['status'] == 'approved') {
+                // int dtStart = int.parse(DateFormat.d()
+                //     .format());
+                // int dtEnd = int.parse(DateFormat.d()
+                //     .format(DateTime.parse(element.data()['cuti_end'])));
+                dateminus += daysBetween2(
+                        DateTime.parse(element.data()['cuti_start']),
+                        DateTime.parse(element.data()['cuti_end'])) +
+                    1;
               }
             }));
     return dateminus;
   }
 
   Future<int> sisaCuti() async {
-    int totalCuti = 12;
+    // int totalCuti = 12;
     Future<bool> tahunan = cutiTahunan().then((value) => value.exists);
     if (await tahunan) {
-      Future<dynamic> amountCuti =
-          cutiTahunan().then((value) => value.data()!['amount']);
-      totalCuti = int.parse(await amountCuti);
+      DocumentSnapshot<Map<String, dynamic>> cutiTahunan = await firestore
+          .collection("cuti")
+          .doc("${DateTime.now().year}")
+          .get();
+      Map<String, dynamic>? data = cutiTahunan.data();
+      // Future<dynamic> amountCuti =
+      //     cutiTahunan().then((value) => value.data()!['amount']);
+      // totalCuti = int.parse(await amountCuti);
+      int dateminus = await getCuti();
+      return int.parse(data!['amount']) - dateminus;
+    } else {
+      return 0;
     }
-    int dateminus = await getCuti();
-    return totalCuti - dateminus;
   }
 }

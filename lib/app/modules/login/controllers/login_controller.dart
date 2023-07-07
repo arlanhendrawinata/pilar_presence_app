@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -13,6 +14,7 @@ class LoginController extends GetxController {
   TextEditingController passC = TextEditingController();
 
   FirebaseAuth auth = FirebaseAuth.instance;
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   bool isValidEmail = false;
 
@@ -82,6 +84,11 @@ class LoginController extends GetxController {
     }
   }
 
+  Future<Map<String, dynamic>?> isUserActive(String uid) async {
+    final query = await firestore.collection("users").doc(uid).get();
+    return query.data();
+  }
+
   void login() async {
     String email = emailC.text.trim();
     String password = passC.text.trim();
@@ -94,30 +101,38 @@ class LoginController extends GetxController {
           isLoading.value = true;
           UserCredential userCredential = await auth.signInWithEmailAndPassword(
               email: email, password: password);
-
           // ketersediaan user
           if (userCredential.user != null) {
+            final userData = await isUserActive(userCredential.user!.uid);
             // verifikasi email = true
             if (userCredential.user!.emailVerified == true) {
-              if (password == "pilar123") {
-                await CustomAlertDialog.showDialog(
-                    context: Get.context!,
-                    title: "Apakah Anda ingin mengganti password?",
-                    message:
-                        "Password akun Anda masih default. Kami menyarankan untuk mengganti password anda",
-                    isLoading: isLoading,
-                    onConfirm: () {
-                      isLoading.value = false;
-                      Get.back();
-                      Get.toNamed(Routes.NEW_PASSWORD);
-                    },
-                    onCancel: () {
-                      isLoading.value = false;
-                      Get.offAllNamed(Routes.MY_PAGE_VIEW);
-                    });
+              if (userData!['status'] != "inactive") {
+                if (password == "pilar123") {
+                  await CustomAlertDialog.showDialog(
+                      context: Get.context!,
+                      title: "Apakah Anda ingin mengganti password?",
+                      message:
+                          "Password akun Anda masih default. Kami menyarankan untuk mengganti password anda",
+                      isLoading: isLoading,
+                      onConfirm: () {
+                        isLoading.value = false;
+                        Get.back();
+                        Get.toNamed(Routes.NEW_PASSWORD);
+                      },
+                      onCancel: () {
+                        isLoading.value = false;
+                        Get.offAllNamed(Routes.MY_PAGE_VIEW);
+                      });
+                } else {
+                  isLoading.value = false;
+                  Get.offAllNamed(Routes.MY_PAGE_VIEW);
+                }
               } else {
-                isLoading.value = false;
-                Get.offAllNamed(Routes.MY_PAGE_VIEW);
+                auth.signOut();
+                CustomToast.dangerToast(
+                    "Terjadi Kesalahan",
+                    "Akun kamu tidak aktif. Silahkan menghubungi admin untuk mengaktifkan akun Anda.",
+                    Get.context!);
               }
               // jika user belum verif email
             } else {

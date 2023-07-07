@@ -104,7 +104,7 @@ class UserUpdatePasswordView extends GetView<UserUpdatePasswordController> {
                     ),
                     child: (controller.isLoading.isFalse)
                         ? Text(
-                            'Reset Password',
+                            'Ubah Password',
                             style: TextStyle(
                               fontSize: Constant.textSize(
                                   context: context, fontSize: 14),

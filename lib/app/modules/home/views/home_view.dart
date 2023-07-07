@@ -9,6 +9,7 @@ import 'package:pilar_presence_app/app/style/app_color.dart';
 import 'package:deep_collection/deep_collection.dart';
 import '../controllers/home_controller.dart';
 import '../../../../constant.dart';
+import 'package:change_case/change_case.dart';
 
 class HomeView extends GetView<HomeController> {
   const HomeView({Key? key}) : super(key: key);
@@ -26,7 +27,7 @@ class HomeView extends GetView<HomeController> {
           }
           if (snapshot.hasData) {
             Map<String, dynamic>? user = snapshot.data?.data();
-            String profileName = controller.capitalize(user?["name"]);
+            String profileName = "${user?["name"]}".toCapitalCase();
             String imageUrl = "https://ui-avatars.com/api/?name=$profileName";
             String photoURL = user?["photoURL"] ?? imageUrl;
 
@@ -217,7 +218,7 @@ class HomeView extends GetView<HomeController> {
                   ),
                 ),
                 Text(
-                  controller.capitalize(profileName),
+                  profileName.toCapitalCase(),
                   style: TextStyle(
                       color: Colors.black87,
                       fontWeight: FontWeight.w600,

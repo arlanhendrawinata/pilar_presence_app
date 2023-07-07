@@ -149,7 +149,7 @@ class PerizinanSakitRequestView
                   ),
                   child: (controller.isLoading.isFalse)
                       ? Text(
-                          'Kirim permintaan sakit',
+                          'Kirim Permintaan Sakit',
                           style: TextStyle(
                             fontSize: Constant.textSize(
                                 context: context, fontSize: 14),

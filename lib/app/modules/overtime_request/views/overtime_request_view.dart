@@ -130,7 +130,9 @@ class OvertimeRequestView extends GetView<OvertimeRequestController> {
                               () => Text(
                                 controller.timeStart.value,
                                 style: TextStyle(
-                                    color: AppColor.secondarySoft,
+                                    color: controller.timeStart.value != "00:00"
+                                        ? Colors.black
+                                        : AppColor.secondarySoft,
                                     fontSize: Constant.textSize(
                                         context: context, fontSize: 14)),
                               ),
@@ -146,18 +148,6 @@ class OvertimeRequestView extends GetView<OvertimeRequestController> {
                       onTap: () {
                         if (controller.dateC.text != "") {
                           controller.getTime(context, controller.timeEnd);
-                          // DatePicker.showTimePicker(
-                          //   context,
-                          //   showSecondsColumn: false,
-                          //   showTitleActions: true,
-                          //   currentTime:
-                          //       DateTime.parse("${controller.dateC.text}"),
-                          //   onConfirm: (time) {
-                          //     controller.dateTimeEnd = "${time}";
-                          //     controller.timeEnd?.value =
-                          //         "${controller.timeFormat.format(time)}";
-                          //   },
-                          // );
                         } else {
                           CustomToast.infoToast(
                               "Tanggal Kosong",
@@ -187,7 +177,9 @@ class OvertimeRequestView extends GetView<OvertimeRequestController> {
                               () => Text(
                                 controller.timeEnd.value,
                                 style: TextStyle(
-                                    color: AppColor.secondarySoft,
+                                    color: controller.timeEnd.value != "00:00"
+                                        ? Colors.black
+                                        : AppColor.secondarySoft,
                                     fontSize: Constant.textSize(
                                         context: context, fontSize: 14)),
                               ),

@@ -167,8 +167,8 @@ class PresenceController extends GetxController {
 
     String statusArea = "Di luar area";
 
-    if (distance != 5) {
-      // if (distance <= 5) {
+    if (distance <= 5) {
+      //* if (distance <= 5) {
       statusArea = "Di dalam area";
 
       if (snapPresence.docs.length == 0) {
@@ -273,6 +273,7 @@ class PresenceController extends GetxController {
         }
       }
     } else {
+      Get.back();
       CustomToast.dangerToast(
           "Terjadi Kesalahan",
           "Anda absen diluar kantor. Silahkan absen di area kantor",

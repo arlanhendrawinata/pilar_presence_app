@@ -185,6 +185,28 @@ class ManagementUserView extends GetView<ManagementUserController> {
                                                 ),
                                               ],
                                             ),
+                                            const SizedBox(height: 20),
+                                            InkWell(
+                                              onTap: () {},
+                                              child: Container(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        vertical: 6,
+                                                        horizontal: 20),
+                                                decoration: BoxDecoration(
+                                                  color: AppColor.errorSoft,
+                                                ),
+                                                child: Text(
+                                                  "Non active",
+                                                  style: TextStyle(
+                                                    color: AppColor.error,
+                                                    fontSize: Constant.textSize(
+                                                        context: context,
+                                                        fontSize: 13),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
                                           ],
                                         ),
                                       ),
